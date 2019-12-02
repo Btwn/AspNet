@@ -1,0 +1,100 @@
+Modelo:contiene una representacion de los datos del sistema (bd).
+
+Vista/interface: iu para interactuar con el usuario y los datos que se envian al cliente.
+
+Controllador:gestiona el flujo de información entre el modelo y la vista.
+
+Modelo:
+-Accede a la capa de almacenamiento de datos. Lo ideal es que el modelo sea independiente del sistema de almacenamiento.
+-Define las reglas de negocio (la funcionalidad del sistema). Un ejemplo de regla puede ser:
+	 "Si la mercancía pedida no está en el almacén, consultar el tiempo de entrega estándar del proveedor".
+-Lleva un registro de las vistas y controladores del sistema.
+-Si estamos ante un modelo activo, notificará a las vistas los cambios que en los datos pueda producir un agente externo
+     (por ejemplo, un fichero por lotes  que actualiza los datos, un temporizador que desencadena una inserción, etc.).
+
+controlador:
+-Recibe los eventos de entrada (un clic, un cambio en un campo de texto, etc.).
+-Contiene reglas de gestión de eventos, del tipo "SI Evento Z, entonces Acción W". Estas acciones pueden
+ 	suponer peticiones al modelo o a las vistas. Una de estas peticiones a las vistas puede ser 
+ 	una llamada al método "Actualizar()".
+ 	Una petición al modelo puede ser "Obtener_tiempo_de_entrega ( nueva_orden_de_venta )". 
+Vista:
+-Recibir datos del modelo y los muestra al usuario.
+-Tienen un registro de su controlador asociado (normalmente porque además lo instancia).
+-Pueden dar el servicio de "Actualización()", para que sea invocado por el controlador o por el modelo (cuando
+ 	es un modelo activo que informa de los cambios en los datos producidos por otros agentes).
+
+el flujo que comprende usualmente es el siguiente{
+
+->El usuario interactúa con la interfaz de usuario de alguna forma (por ejemplo, el usuario pulsa un botón, enlace, etc.)
+
+->El controlador recibe (por parte de los objetos de la interfaz-vista) la notificación de la
+ acción solicitada por el usuario. El controlador gestiona el evento que llega, frecuentemente a través de un gestor
+ de eventos (handler) o callback.
+
+->El controlador accede al modelo, actualizándolo, posiblemente modificándolo de forma adecuada 
+ a la acción solicitada por el usuario (por ejemplo, el controlador actualiza el carro de la compra del usuario). 
+ Los controladores complejos están a menudo estructurados usando un patrón de comando que encapsula las acciones 
+ y simplifica su extensión.
+
+->El controlador delega a los objetos de la vista la tarea de desplegar la interfaz de usuario.
+ La vista obtiene sus datos del modelo para generar la interfaz apropiada para el usuario donde
+ se refleja los cambios en el modelo (por ejemplo, produce un listado del contenido del carro de la compra). 
+ El modelo no debe tener conocimiento directo sobre la vista. Sin embargo, se podría utilizar el patrón Observador 
+ para proveer cierta indirección entre el modelo y la vista, permitiendo al modelo notificar a los interesados de 
+ cualquier cambio. Un objeto vista puede registrarse con el modelo y esperar a los cambios, pero aun así el modelo en 
+ sí mismo sigue sin saber nada de la vista. El controlador no pasa objetos de dominio (el modelo) a la vista aunque 
+ puede dar la orden a la vista para que se actualice. Nota: En algunas implementaciones la vista no tiene acceso directo
+  al modelo, dejando que el controlador envíe los datos del modelo a la vista.
+
+->La interfaz de usuario espera nuevas interacciones del usuario, comenzando el ciclo nuevamente.
+
+-------------------------------------------------------------
+se crea una interface generica
+
+[carpeta de interfaces]
+	
+	public interface IDataContext<T>
+		{
+			T GetCurrentDataContext();
+			void DisposeCurrentDataContext();
+		}
+[se crea una clase que servira para acceder al contexto que creamos]
+
+	public class DataContext<T>:IDataContext<T>where T:ObjectContext,new()
+		{
+		 public T GetCurrentDataContext()
+			{
+
+				var dataContext=HttpContext.Current.Internet[typeof(T)] as T;
+				if (dataContext==null)
+				{
+					dataContext=net T();
+					HttpContext.Current.Items[typeof(T)]=dataContext;
+				}
+				return dataContext;
+			}
+		
+
+		 public void DisposeCurrentDataContext()
+			{
+				var dataContext=HttpContext.Current.Items[typeof(T)]as T;
+				if(dataContext != null)
+				dataContext.Dispose();
+			}
+[patron de unidad para acceder al modelo]
+//sin patron de unidad
+private CertificadosEntities_dataContext= new CertificadosEntities();
+
+//con patron de unidad
+Private DataContextFactory<Model>_dataContext = new DataContextFactory<Model>();
+
+[acceder al modelo]
+{
+	var res=from datos in _dataContext.GetCurrentDataContext().Niveles
+		where datos.Activo== true
+		select datos;
+	return res.ToList();
+}
+
+-------------------------se accede de esta forma a las entidades por medio de la clase que controla el contexto------------------------
