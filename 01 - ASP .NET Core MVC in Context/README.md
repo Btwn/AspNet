@@ -27,3 +27,6 @@
   * **API moderna:** ASP.NET Core MVC está diseñado para .NET Core, por lo que su API puede aprovechar al máximo las innovaciones de lenguaje y tiempo de ejecución familiares para los programadores de C #, incluida la palabra clave de espera, los métodos de extensión, las expresiones lambda, los tipos anónimos y dinámicos, y la consulta integrada de lenguaje ( LINQ).
   * **Multiplataforma:** Microsoft creó la plataforma cruzada ASP.NET Core, tanto para el desarrollo como para la implementación. .NET Core está disponible para diferentes plataformas, incluidas macOS y una variedad de distribuciones populares de Linux.
   * **ASP.NET Core MVC es de código abierto:** A diferencia de las plataformas de desarrollo web de Microsoft anteriores, puede descargar el código fuente de ASP. NET Core y ASP.NET Core MVC e incluso modificar y compilar su propia versión. Puede descargar el código fuente ASP.NET Core y ASP.NET Core MVC desde [ASP.NET](https://github.com/aspnet).
+  
+Ligas de interes:
+https://geeks.ms/sergiotarrillo/2010/03/26/asp-net-webforms-vs-asp-net-mvc-la-nueva-batalla/
