@@ -1,0 +1,40 @@
+Asp.net Web Forms
+
+Es un modelo de programación basado en eventos y controles.
+Donde es posible crear sitios web dinamico, utilizando un superficie
+de diseño, controles y componentes que permitan crear rapidamente 
+sofisticadas y potentes interfaz de usuario con acceso a datos. haciendo 
+un uso de los lenguajes que admitan  CLR dando al usuario la sensación de 
+estar trabajando en una aplicación de escritorio.
+
+Asp.net MVC 
+
+Framework que trabaja bajo la métodologia MVC( Modelo-Vista-controlador) patron
+que busca separar la lógica de negocio de nuestra aplicación y la forma de
+visualizar los datos y la interacción entre estas dos actividades.
+
+Modelo.- Es en donde se imp|||lementan las clases y estructuras de datos
+	que resuelven  la lógica  de negocio de nuestra aplicación.
+
+Vista.- Es en donde se define el como se mostrara la interfaz ante el
+	usuario final.
+
+Controlador.- Es el coordina la comunicación entre las peticiones que hace el cliente
+
+											Modelo
+				Navegador----> Controlador
+											Vista
+				 
+Asp.net Core
+
+aplicación web  Moderna de código abierto multiplataforma que interactua con la
+métodologia de MVC y API Web.
+
+.Fue diseñado para ejecutarse en la nube aunque no tiene ningún problema para 
+ ejecutarse localmente.
+
+.Se compone de componentes modulares que optimizan los recursos con una 
+ sobrecarga minima
+
+.al ser un Framework multiplataforma es posible ejecutarse en windows, mac, linux
+		
