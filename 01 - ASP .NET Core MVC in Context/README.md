@@ -1,35 +1,32 @@
-# Pro ASP.NET Core MVC 2
+## ASP .NET Core MVC in Context
 
-|Fecha|Paginas|Capitulo|Titulo|
-|-|-|-|-|
-|2-Dic-2019|8|Chapter 1:|ASP .NET Core MVC in Context|
-|3-Dic-2019|42|Chapter 2:|Your First MVC Application|
-|4-Dic-2019|14|Chapter 3:|The MVC Pattern, Projects, and Conventions|
-|5-Dic-2019|38|Chapter 4:|Essential C# Features|
-|6-Dic-2019|22|Chapter 5:|Working with Razor|
-|9-Dic-2019|36|Chapter 6:|Working with Visual Studio|
-|10-Dic-2019|30|Chapter 7:|Unit Testing MVC Applications|
-|11-Dic-2019|44|Chapter 8:|SportsStore: A Real Application|
-|12-Dic-2019|34|Chapter 9:|SportsStore: Navigation|
-|13-Dic-2019|24|Chapter 10:|SportsStore: Completing the Cart|
-|16-Dic-2019|28|Chapter 11:|SportsStore: Administration|
-|17-Dic-2019|26|Chapter 12:|SportsStore: Security and Deployment|
-|18-Dic-2019|26|Chapter 13:|Working with Visual Studio Code|
-|19-Dic-2019|54|Chapter 14:|Configuring Applications|
-|20-Dic-2019|40|Chapter 15:|URL Routing|
-|2-Ene-2020|38|Chapter 16:|Advanced Routing Features|
-|3-Ene-2020|44|Chapter 17:|Controllers and Actions|
-|6-Ene-2020|34|Chapter 18:|Dependency Injection|
-|7-Ene-2020|40|Chapter 19:|Filters|
-|8-Ene-2020|32|Chapter 20:|API Controllers|
-|9-Ene-2020|34|Chapter 21:|Views|
-|10-Ene-2020|30|Chapter 22:|View Components|
-|13-Ene-2020|34|Chapter 23:|Understanding Tag Helpers|
-|14-Ene-2020|26|Chapter 24:|Using the Form Tag Helpers|
-|15-Ene-2020|30|Chapter 25:|Using the Other Built-in Tag Helpers|
-|16-Ene-2020|38|Chapter 26:|Model Binding|
-|17-Ene-2020|32|Chapter 27:|Model Validation|
-|20-Ene-2020|38|Chapter 28:|Getting Started with Identity|
-|21-Ene-2020|30|Chapter 29:|Applying ASP.NET Core Identity|
-|22-Ene-2020|34|Chapter 30:|Advanced ASP.NET Core Identity|
-|23-Ene-2020|30|Chapter 31:|Model Conventions and Action Constraints|
+* **ASP.NET original fue introducido en el 2002**, en un momento en que Microsoft deseaba proteger una posición dominante en el desarrollo tradicional de aplicaciones de escritorio y veía a Internet como una amenaza.
+* Con Web Forms, Microsoft intentó ocultar tanto el Protocolo de transferencia de hipertexto (HTTP), con su ausencia de estado intrínseco, como el Lenguaje de marcado de hipertexto (HTML), que en ese momento no era familiar para muchos desarrolladores, en efecto, **Web Forms es una capa de abstracción gigante** diseñada para ofrecer una interfaz gráfica de usuario (GUI) clásica basada en eventos a través de la Web.
+* **La idea era hacer que el desarrollo web se sintiera igual que desarrollar una aplicación de escritorio.** Los desarrolladores podían pensar en términos de una IU con estado y no necesitaban trabajar con una serie de solicitudes y respuestas HTTP independientes. Microsoft podría pasar sin problemas al ejército de desarrolladores de escritorio de Windows al nuevo mundo de aplicaciones web.
+* El desarrollo tradicional de formularios web ASP.NET fue bueno en principio, pero la realidad resultó ser más complicada:
+  * **View State weight:** el mecanismo real para mantener el estado entre las solicitudes resultó en la transferencia de grandes bloques de datos entre el cliente y el servidor.
+  * **Ciclo de vida de la pagina:** el mecanismo para conectar los eventos del lado del cliente con el código del controlador de eventos del lado del servidor, parte del ciclo de vida de la página, podría ser complicado y delicado.
+  * **Falso sentido de separación de preocupaciones:** el modelo de código subyacente de ASP.NET Web Forms proporcionó un medio para sacar el código de la aplicación de su marcado HTML y colocarlo en una clase separada de código subyacente. Esto se hizo para separar la lógica y la presentación, pero, en realidad, se alentó a los desarrolladores a mezclar el código de presentación con su lógica de aplicación, el resultado final podría ser frágil e ininteligible.
+  * **Control limitado sobre HTML:** los controles del servidor se representaron como HTML, pero no necesariamente el HTML que deseaba. En las primeras versiones de ASP.NET, la salida HTML no cumplía con los estándares web o no hacía un buen uso de las hojas de estilo en cascada (CSS), y los controles del servidor generaban atributos de identificación complejos e impredecibles a los que era difícil acceder mediante JavaScript.
+  * **Abstracción defectuosa:** los formularios web intentaron ocultar HTML y HTTP siempre que fue posible. A medida que intentaba implementar comportamientos personalizados, con frecuencia se salía de la abstracción, lo que lo obligaba a realizar ingeniería inversa del mecanismo de evento de devolución o realizar actos obtusos para que generara el HTML deseado.
+  * **Baja capacidad de prueba:** los diseñadores de Web Forms no podrían haber previsto que las pruebas automatizadas se convertirían en un componente esencial del desarrollo de software. La arquitectura estrechamente acoplada que diseñaron no era adecuada para pruebas unitarias.
+
+* **En octubre de 2007, Microsoft anunció una nueva plataforma de desarrollo,** construida sobre la plataforma ASP.NET existente, destinada a responder directamente a las críticas de los Web Forms.
+* **La nueva plataforma se llamó ASP.NET MVC Framework** y reflejó las tendencias emergentes en el desarrollo de aplicaciones web, como la estandarización HTML y CSS, los servicios web RESTful, las pruebas de unitarias efectivas y la idea de que los desarrolladores deberían adoptar la naturaleza sin estado de HTTP.
+* En el momento en que se creó MVC Framework, tenía sentido que Microsoft lo creara sobre la plataforma ASP.NET existente, que tenía una gran cantidad de funcionalidades sólidas de bajo nivel. Pero **se requirieron compromisos para injertar MVC Framework en una plataforma que fue diseñada originalmente para Web Forms.**
+* El resultado fue cada vez más extraño, donde las características con peculiaridades de diseño requeridas para admitir MVC Framework se ampliaron para admitir Web Forms, con más peculiaridades de diseño para que todo encajara, **y el resultado general fue un desastre fragmentado.**
+
+* **En 2015**, Microsoft anunció una nueva dirección para ASP.NET y MVC Framework, que eventualmente produciría **ASP.NET Core MVC**
+* **ASP.NET Core es un marco completamente nuevo.** Es más simple, es más fácil trabajar con él y está libre del legado que proviene de los Web Forms. Y, dado que se basa en .NET Core, admite el desarrollo de aplicaciones web en una variedad de plataformas y contenedores.
+* Beneficios clave de ASP.NET Core MVC:
+  * **Arquitectura MVC:** De hecho, ASP.NET Core MVC implementa una variante del patrón MVC que es especialmente adecuada para aplicaciones web.
+  * **Extensibilidad:** Puede reemplazar fácilmente los componentes clave con otros de su propia implementación.
+  * **Control estricto sobre HTML y HTTP:** En lugar de generar franjas de HTML sobre las que tiene poco control, ASP.NET Core MVC lo alienta a crear un marcado simple y elegante con CSS. ASP.NET Core MVC funciona en sintonía con HTTP. Usted tiene control sobre las solicitudes que pasan entre el navegador y el servidor, por lo que puede ajustar su experiencia de usuario tanto como desee.
+  * **Testabilidad:** Cada pieza de la plataforma ASP.NET Core y el marco ASP.NET Core MVC pueden aislarse y reemplazarse para pruebas unitarias, que pueden realizarse utilizando cualquier marco de prueba de código abierto popular, como xUnit.
+  * **Potente sistema de enrutamiento:** Las URL limpias eran difíciles de implementar en marcos anteriores, pero ASP.NET Core MVC utiliza una función conocida como enrutamiento de URL para proporcionar URL limpias de forma predeterminada.
+  * **API moderna:** ASP.NET Core MVC está diseñado para .NET Core, por lo que su API puede aprovechar al máximo las innovaciones de lenguaje y tiempo de ejecución familiares para los programadores de C #, incluida la palabra clave de espera, los métodos de extensión, las expresiones lambda, los tipos anónimos y dinámicos, y la consulta integrada de lenguaje ( LINQ).
+  * **Multiplataforma:** Microsoft creó la plataforma cruzada ASP.NET Core, tanto para el desarrollo como para la implementación. .NET Core está disponible para diferentes plataformas, incluidas macOS y una variedad de distribuciones populares de Linux.
+  * **ASP.NET Core MVC es de código abierto:** A diferencia de las plataformas de desarrollo web de Microsoft anteriores, puede descargar el código fuente de ASP. NET Core y ASP.NET Core MVC e incluso modificar y compilar su propia versión. Puede descargar el código fuente ASP.NET Core y ASP.NET Core MVC desde [ASP.NET](https://github.com/aspnet).
+  
+Ligas de interes:
+https://geeks.ms/sergiotarrillo/2010/03/26/asp-net-webforms-vs-asp-net-mvc-la-nueva-batalla/
