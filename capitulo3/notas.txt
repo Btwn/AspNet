@@ -1,0 +1,104 @@
+°Modelos: contienen la representacion de los datos con los que el usuario trabaja.
+
+°Vistas: son usadas para renderizar parte de la interfaz del modelo.
+
+°controladores: procesan las solicitudes entrantes, relaizan operaciones en el
+modelo y seleccionan las vistas a renderizar al usuario.
+
+otros patrones de arquitectura :
+MVP
+en donde:
+->el modelo es una interfaz que define los datos que se mostrarán o no actuado 
+en la interz de usuario
+
+->el presentador actua sobre la vista y el modelo. recupera los detos del repositorio
+(modelo) y los formatea para mostrarlos en la vista.
+
+->la vista es una interfaz pasiba que exhibe datos(el modelo) y ordenes de usuario
+de las rutas(eventos) alpresentador para actuar sobre los datos.
+-------------------------------
+UI:
+las interfaces de usuario inteligentes son usadas para proyectos simples
+por que pueden obtener buenos resultados rapidamente (comparado con el desarrollo que implica mvc)
+
+es dificil de extender o de dar mantenimiento.
+-------------------------------
+Modelo Vista:
+puede contener bloques masivos de datos de acceso en los modelos por lo que resulta
+poco eficiente ya que no solo contienen las reglas de negocio.
+
+-------------------------------
+contenido de un proyecto MVC .NET
+
+/Areas Areas are a way of partitioning a large application into smaller pieces.
+I describe areas in Chapter 16.
+
+/Dependencies The Dependencies item provides details of all the packages a project
+relies on. I describe the package managers that Visual Studio uses in
+Chapter 6.
+
+/Components This is where view component classes, which are used to display selfcontained features such as shopping carts, are defined. I describe view
+components in Chapter 22.
+
+/Controllers This is where you put your controller classes. This is a convention. You
+can put your controller classes anywhere you like because they are all
+compiled into the same assembly. I describe controllers in detail in
+Chapter 17.
+
+/Data This is where database context classes are defined, although I prefer
+to ignore this convention and define them in the Models folder, as
+demonstrated in Chapter 8.
+
+/Data/Migrations This is where Entity Framework Core migrations are stored so
+that databases can be prepared to store the application data. I use
+migrations in Chapters 8, 9, 10, and 11 as part of the SportsStore
+project.
+
+/Models This is where you put your view model and domain model classes.
+This is a convention. You can define your model classes anywhere in
+the project or in a separate project.
+
+/Views This directory holds views and partial views, usually grouped together
+in folders named after the controller with which they are associated.
+I describe views in detail in Chapter 21.
+
+/Views/Shared This directory holds layouts and views that are not specific to a single
+controller. I describe views in detail in Chapter 21.
+
+/Views/_ViewImports.cshtml This file is used to specify the namespaces that will be included in
+Razor view files, as described in Chapter 5. It is also used to set up tag
+helpers, as described in Chapter
+
+/Views/_ViewStart.cshtml This file is used to specify a default layout for the Razor view engine, as
+described in Chapter 5.
+
+/appsettings.json This file contains configuration settings that can be tailored for different
+environments, such as development, testing, and production. The most
+common uses for this file are to define database server connection
+
+strings and logging/debug settings, which I describe in Chapter 14.
+/bower.json This file contains the list of packages managed by the Bower package
+manager, as described in Chapter 6.
+
+/<project>.csproj This file contains the configuration for the project, including the NuGet
+packages that the application requires, as described in Chapters 6
+and 14. This file is hidden and can be edited only by right-clicking the
+project item in the Solution Explorer window and selecting the Edit
+<project>.csproj menu item.
+
+/Program.cs This class configures the hosting platform for the application, as
+described in Chapter 14.
+
+/Startup.cs This class configures the application, as described in Chapter 14.
+
+/wwwroot This is where you put static content such as CSS files and images. It
+is also where the Bower package manager installs JavaScript and CSS
+packages, as described in Chapter 6. 
+-----------------------------------------------
+
+por defecto la vista llamada tendra el mismo nombre que el action
+nombre:
+return View();-> regresara la vista "nombre"
+return View("otravista")-> renderizara la vista "otravista"
+ 
+
