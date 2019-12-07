@@ -1,0 +1,38 @@
+se consulto stack overflow para para una solucion de funciones obsoletas que se presentaron en este capitulo.
+
+https://stackoverflow.com/questions/57684093/using-usemvc-to-configure-mvc-is-not-supported-while-using-endpoint-routing
+
+https://ymatias.com/2016/07/16/uso-ienumerable-c/
+
+se consulto informacion sobre IEnumerable c#
+
+IEnumerable  es una  aplicación del iterador en .NET
+
+Recuerde que cuando una clase implementa IEnumerable, es decir que se pueden enumerar.
+Esto significa que puede utilizar un bloque foreach para iterar sobre ese tipo.
+
+En C#, todas las colecciones “collections” (por ejemplo, listas, diccionarios, pilas, colas, etc.) 
+pueden enumerarse porque implementan la interfaz IEnumerable.
+ Así sean cadenas.
+ Se puede recorrer a través de una cadena usando un bloque foreach para conseguir cada carácter de la cadena.
+
+La bueno de IEnumerable es que vamos a utilizar un mecanismo simple y consistente para recorrer cualquier objeto,
+ independientemente de su estructura interna.
+
+https://www.infoworld.com/article/3122592/my-two-cents-on-the-yield-keyword-in-c.html
+
+->yeld indica un bloque de iteracion y permite el acceso a los datos de la iteracion a medida que se necesitan.
+a diferencia de sin su uso que se accede a los datos una vez concluida la iteracion.
+
+-----------------------------------------------------
+Metodos asyncronos
+
+Funcionan en segundo plano y notifican cuando estan completos
+son importantes para evitar los cuellos de botella,
+y permiten a las aplicaciones tomar ventaja de los diferentes nucleos de proceso,
+y procesarlos en paralelo.
+
+crear proyectos:
+https://docs.microsoft.com/es-es/nuget/quickstart/install-and-use-a-package-in-visual-studio
+
+
