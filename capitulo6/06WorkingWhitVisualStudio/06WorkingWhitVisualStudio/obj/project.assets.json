@@ -1,0 +1,58 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v3.0": {}
+  },
+  "libraries": {},
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v3.0": []
+  },
+  "packageFolders": {
+    "C:\\Users\\jdrivera\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\jdrivera\\Downloads\\AspNet-David\\AspNet-David\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj",
+      "projectName": "06WorkingWhitVisualStudio",
+      "projectPath": "C:\\Users\\jdrivera\\Downloads\\AspNet-David\\AspNet-David\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj",
+      "packagesPath": "C:\\Users\\jdrivera\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jdrivera\\Downloads\\AspNet-David\\AspNet-David\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\jdrivera\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp3.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp3.0": {
+        "imports": [
+          "net461"
+        ],
+        "assetTargetFallback": true,
+        "warn": true
+      }
+    }
+  }
+}

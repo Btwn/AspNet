@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jdrivera\\source\\repos\\WebApplication2\\WebApplication2\\WebApplication2.csproj": {}
+    "C:\\jd.rivera\\gitDotNEt\\AspNet\\capitulo2\\WebApplication2\\WebApplication2\\WebApplication2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jdrivera\\source\\repos\\WebApplication2\\WebApplication2\\WebApplication2.csproj": {
+    "C:\\jd.rivera\\gitDotNEt\\AspNet\\capitulo2\\WebApplication2\\WebApplication2\\WebApplication2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jdrivera\\source\\repos\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+        "projectUniqueName": "C:\\jd.rivera\\gitDotNEt\\AspNet\\capitulo2\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
         "projectName": "WebApplication2",
-        "projectPath": "C:\\Users\\jdrivera\\source\\repos\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+        "projectPath": "C:\\jd.rivera\\gitDotNEt\\AspNet\\capitulo2\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
         "packagesPath": "C:\\Users\\jdrivera\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jdrivera\\source\\repos\\WebApplication2\\WebApplication2\\obj\\",
+        "outputPath": "C:\\jd.rivera\\gitDotNEt\\AspNet\\capitulo2\\WebApplication2\\WebApplication2\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
