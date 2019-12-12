@@ -101,3 +101,5 @@ C:\dadado\Cursos\AspNet\07WorkingWhitVisualStudio\06WorkingWhitVisualStudio.Test
 C:\dadado\Cursos\AspNet\07WorkingWhitVisualStudio\06WorkingWhitVisualStudio.Tests\bin\Debug\netcoreapp3.0\06WorkingWhitVisualStudio.Tests.pdb
 C:\dadado\Cursos\AspNet\07WorkingWhitVisualStudio\06WorkingWhitVisualStudio.Tests\obj\Debug\netcoreapp3.0\06WorkingWhitVisualStudio.Tests.dll
 C:\dadado\Cursos\AspNet\07WorkingWhitVisualStudio\06WorkingWhitVisualStudio.Tests\obj\Debug\netcoreapp3.0\06WorkingWhitVisualStudio.Tests.pdb
+C:\dadado\Cursos\AspNet\07WorkingWhitVisualStudio\06WorkingWhitVisualStudio.Tests\bin\Debug\netcoreapp3.0\Castle.Core.dll
+C:\dadado\Cursos\AspNet\07WorkingWhitVisualStudio\06WorkingWhitVisualStudio.Tests\bin\Debug\netcoreapp3.0\Moq.dll
