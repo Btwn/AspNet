@@ -50,9 +50,9 @@ namespace SportsStore
             {
                 endpoints.MapControllerRoute(
                     name: "pagination",
-                    pattern: "Products/Page{productPage}",
+                    //pattern: "Products/Page{productPage}",
                     //pattern: "{controller=Product}/{action=List}/{productPage}",
-                    //pattern: "Page{productPage}",
+                    pattern: "Page{productPage}",
                     new { Controller = "Product", Action = "List" });
                 
                 endpoints.MapControllerRoute(
