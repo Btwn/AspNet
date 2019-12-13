@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\dadado\\Cursos\\AspNet\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj": {}
+    "C:\\Users\\jdrivera\\Downloads\\AspNet-David\\AspNet-David\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj": {}
   },
   "projects": {
-    "C:\\dadado\\Cursos\\AspNet\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj": {
+    "C:\\Users\\jdrivera\\Downloads\\AspNet-David\\AspNet-David\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dadado\\Cursos\\AspNet\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj",
+        "projectUniqueName": "C:\\Users\\jdrivera\\Downloads\\AspNet-David\\AspNet-David\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj",
         "projectName": "06WorkingWhitVisualStudio",
-        "projectPath": "C:\\dadado\\Cursos\\AspNet\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj",
-        "packagesPath": "C:\\Users\\dadado\\.nuget\\packages\\",
-        "outputPath": "C:\\dadado\\Cursos\\AspNet\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\obj\\",
+        "projectPath": "C:\\Users\\jdrivera\\Downloads\\AspNet-David\\AspNet-David\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj",
+        "packagesPath": "C:\\Users\\jdrivera\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jdrivera\\Downloads\\AspNet-David\\AspNet-David\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\dadado\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jdrivera\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

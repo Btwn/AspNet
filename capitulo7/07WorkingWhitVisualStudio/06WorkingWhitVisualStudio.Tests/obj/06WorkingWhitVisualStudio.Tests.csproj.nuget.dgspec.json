@@ -1,0 +1,152 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.Tests\\06WorkingWhitVisualStudio.Tests.csproj": {}
+  },
+  "projects": {
+    "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.Tests\\06WorkingWhitVisualStudio.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.Tests\\06WorkingWhitVisualStudio.Tests.csproj",
+        "projectName": "06WorkingWhitVisualStudio.Tests",
+        "projectPath": "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.Tests\\06WorkingWhitVisualStudio.Tests.csproj",
+        "packagesPath": "C:\\Users\\dadado\\.nuget\\packages\\",
+        "outputPath": "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\dadado\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj": {
+                "projectPath": "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Microsoft.CodeAnalysis.FxCopAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.9.8, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.2.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj",
+        "projectName": "06WorkingWhitVisualStudio",
+        "projectPath": "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\06WorkingWhitVisualStudio.csproj",
+        "packagesPath": "C:\\Users\\dadado\\.nuget\\packages\\",
+        "outputPath": "C:\\dadado\\Cursos\\AspNet\\07WorkingWhitVisualStudio\\06WorkingWhitVisualStudio\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\dadado\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

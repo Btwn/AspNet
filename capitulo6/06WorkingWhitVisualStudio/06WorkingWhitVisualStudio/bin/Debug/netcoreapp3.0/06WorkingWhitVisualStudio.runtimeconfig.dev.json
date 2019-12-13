@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\dadado\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\dadado\\.nuget\\packages",
+      "C:\\Users\\jdrivera\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\jdrivera\\.nuget\\packages",
       "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
     ]
   }
