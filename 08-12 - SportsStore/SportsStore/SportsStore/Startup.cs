@@ -27,6 +27,8 @@ namespace SportsStore
                     Configuration["Data:SportStoreProducts:ConnectionString"]));
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +37,7 @@ namespace SportsStore
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseSession();
             //app.UseMvc(routes => {
             //    int a = 1;
             //});
@@ -49,15 +52,29 @@ namespace SportsStore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "pagination",
-                    //pattern: "Products/Page{productPage}",
-                    //pattern: "{controller=Product}/{action=List}/{productPage}",
-                    pattern: "Page{productPage}",
+                    name: null,
+                    pattern: "{category}/Page{productPage:int}",
                     new { Controller = "Product", Action = "List" });
-                
+
+                endpoints.MapControllerRoute(
+                    name: null,
+                    pattern: "Page{productPage:int}",
+                    new { Controller = "Product", Action = "List", productPage = 1 });
+
+                endpoints.MapControllerRoute(
+                    name: null,
+                    pattern: "{category}",
+                    new { Controller = "Product", Action = "List", productPage = 1 });
+
+                endpoints.MapControllerRoute(
+                    name: null,
+                    pattern: "",
+                    new { Controller = "Product", Action = "List", productPage = 1 });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Product}/{action=List}/{id?}");
+
                 //endpoints.MapGet("/", async context =>
                 //{
                 //    await context.Response.WriteAsync("Hello World!");
