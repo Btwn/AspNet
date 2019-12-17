@@ -16,6 +16,7 @@ namespace SportsStore.Controllers
         {
             userManager = userMgr;
             signInManager = signMgr;
+            IdentitySeedData.EnsurePopulated(userMgr).Wait();
         }
 
         [AllowAnonymous]
