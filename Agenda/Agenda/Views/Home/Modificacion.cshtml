@@ -1,0 +1,90 @@
+﻿@model Agenda.Models.Contacto
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Modificacion</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container">
+        <div class="alert alert-primary" role="alert">
+            <h3> Agenda</3>
+        </div>
+        <div class="card">
+            <h5 class="card-header">Modificar Contacto</h5>
+            <div class="card-body">
+                <form method="post" class="needs-validation" action="/Home/Modificacion">
+                    <div class="form-group row">
+                        <label class="col-form-label">ID</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="Idcontacto" value="@Model.Idcontacto" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="NombreContacto" value="@Model.NombreContacto" required />
+                        </div>
+                       
+                    </div>
+                        <div class="form-group row">
+                            <label class="col-form-label">Apellido Paterno</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"  name="ApellidoPaterno" value="@Model.ApellidoPaterno" />
+                              
+                            </div> 
+                            
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label">Apellido Materno</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="ApellidoMaterno" value="@Model.ApellidoMaterno" />
+                            </div>
+                            
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label">Sexo</label>
+                            <div class="col-sm-1">
+                                <input type="text" class="form-control" name="sexo" value="@Model.sexo" />
+                            </div>
+                           
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label">Dirección</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="direccion" value="@Model.direccion" />
+                            </div>
+                            
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label">Referencia</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Referencia" value="@Model.Referencia" />
+                            </div>
+                            
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label">Teléfono</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="telefono" value="@Model.telefono" />
+                            </div>
+                         </div>
+                        <div class="form-group row">
+                            <button type="submit" class="btn btn-outline-success">Aceptar</button>
+                        </div>
+</form>
+             </div>
+
+            </diV>
+        </div>
+            <script src="~/Scripts/jquery-3.4.1.js"></script>
+            <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>
