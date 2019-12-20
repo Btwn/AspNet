@@ -1,0 +1,395 @@
+
+En este capítulo, demuestro cómo probar unitariamente aplicaciones MVC. La prueba unitaria es una forma de prueba en la cual
+los componentes individuales están aislados del resto de la aplicación para que su comportamiento pueda ser completamente
+validado ASP.NET Core MVC ha sido diseñado para facilitar la creación de pruebas unitarias, y Visual Studio
+proporciona soporte para una amplia gama de marcos de pruebas unitarias. Te muestro cómo configurar un proyecto de prueba unitaria,
+explica cómo instalar uno de los marcos de prueba más populares y describe el proceso para escribir y
+Ejecutando pruebas. La Tabla 7-1 resume el capítulo.
+DECIDIR SI HACER UNA PRUEBA
+Poder realizar fácilmente pruebas unitarias es uno de los beneficios de usar ASP.NET Core MVC, pero no es para
+todos, y no tengo intención de fingir lo contrario.
+Me gustan las pruebas unitarias y las uso en mis propios proyectos, pero no en todos ellos y no tan consistentemente como usted.
+podría esperar. Tiendo a centrarme en escribir pruebas unitarias para características y funciones que sé que serán difíciles de
+escribir y que probablemente sean la fuente de errores en la implementación. En estas situaciones, las pruebas unitarias ayudan
+estructurar mis pensamientos sobre cómo implementar mejor lo que necesito. Me parece que solo pienso en lo que yo
+la necesidad de probar ayuda a generar ideas sobre posibles problemas, y eso es antes de comenzar a tratar con problemas reales
+errores y defectos.
+Dicho esto, las pruebas unitarias son una herramienta y no una religión, y solo usted sabe cuántas pruebas requiere.
+Si no encuentra útiles las pruebas unitarias o si tiene una metodología diferente que se adapte mejor a usted, entonces
+no sienta que necesita realizar una prueba unitaria solo porque está de moda. (Sin embargo, si no tienes una mejor
+metodología y no está probando en absoluto, entonces probablemente esté permitiendo que los usuarios encuentren sus errores, que es
+Raramente ideal. No tiene que hacer una prueba unitaria, pero realmente debería considerar hacer alguna prueba de algún tipo).
+Si no ha encontrado pruebas unitarias antes, le animo a que lo pruebe y vea cómo funciona.
+trabajos. Si no está probando una unidad de ventilador, puede omitir este capítulo y pasar al Capítulo 8, donde
+Empiezo a construir una aplicación MVC más realista.
+
+
+
+Listado de soluciones de problemas
+Crear una prueba unitaria Cree un proyecto de prueba unitaria, instale un paquete de prueba y
+agregar clases que contienen pruebas
+5, 6
+Aislar componentes para la unidad
+pruebas
+Usar interfaces para separar los componentes de la aplicación.
+y usar implementaciones falsas con datos de prueba restringidos
+en las pruebas unitarias
+7–14
+Ejecute las mismas pruebas de xUnit con
+diferentes valores de datos
+Utilice una prueba unitaria parametrizada u obtenga los datos de prueba de
+un método o propiedad
+15-17
+Simplifica el proceso de creación
+objetos de prueba falsos
+Use un marco burlón 18–19
+
+
+Preparando el proyecto de ejemplo
+En este capítulo, sigo usando el proyecto WorkingWithVisualStudio que creé en el Capítulo 6. Para esto
+capítulo, agregaré soporte para crear nuevos objetos de Producto en el repositorio.
+Habilitación de los ayudantes de etiqueta incorporados
+Utilizo uno de los ayudantes de etiqueta integrados en este capítulo para establecer el atributo href de un elemento de anclaje. Yo explico
+cómo los ayudantes de etiqueta funcionan en detalle en los capítulos 23, 24 y 25, pero para habilitarlos simplemente, creé una vista de importaciones
+Haga clic con el botón derecho en la carpeta Vistas, seleccione Agregar Item Nuevo elemento en el menú emergente y elija
+Plantilla de elemento de página MVC View Import de la categoría ASP.NET. Visual Studio establece automáticamente el
+nombre del archivo a _ViewImports.cshtml, y al hacer clic en el botón Agregar creó el archivo, lo que me permitió
+agregue las declaraciones que se muestran en el Listado 7-1.
+
+
+
+Esta declaración habilita los ayudantes de etiqueta incorporados, incluido el que utilizo en la vista de índice en breve.
+Podría agregar el uso de declaraciones para importar espacios de nombres de los proyectos, pero las vistas no son importantes
+partes de la aplicación de ejemplo en este capítulo, y referirse a los tipos de modelos con sus espacios de nombres no es un
+problema.
+Agregar acciones al controlador
+El primer paso es agregar acciones al controlador de inicio que muestren una vista para ingresar datos y recibir
+esos datos del navegador, como se muestra en el Listado 7-2. Estas acciones siguen el mismo patrón que usé en
+Capítulo 2 y que explico en detalle en el Capítulo 17.
+Listado 7-2. Agregar métodos de acción en el archivo HomeController.cs en la carpeta Controllers.
+
+
+Crear el formulario de entrada de datos
+Para permitir que el usuario cree un nuevo producto, creé una vista Razor llamada AddProduct.cshtml en las Vistas /
+Carpeta de inicio. Este es el nombre del archivo y las convenciones de ubicación que corresponden a la vista predeterminada que representa
+El método AddProduct en el controlador de inicio. El listado 7-3 muestra el contenido de la nueva vista, que se basa
+en el paquete Bootstrap que agregué al proyecto usando Bower en el Capítulo 6.
+Listado 7-3. El contenido del archivo AddProduct.cshtml en la carpeta Vistas / Inicio.
+
+
+Pruebas unitarias de aplicaciones MVC
+Las pruebas unitarias se utilizan para validar el comportamiento de componentes y características individuales en una aplicación, y
+ASP.NET Core y el marco MVC han sido diseñados para facilitar la configuración y ejecución
+pruebas unitarias para aplicaciones web. En las secciones que siguen, explico cómo configurar las pruebas unitarias en Visual Studio
+y demuestre cómo escribir pruebas unitarias para aplicaciones MVC. También presento algunas herramientas útiles que hacen
+pruebas unitarias más simples y confiables.
+Hay una gama de diferentes paquetes de pruebas unitarias disponibles. El que uso en este libro se llama xUnit.net;
+Lo seleccioné porque se integra bien con Visual Studio y porque lo usa el equipo de Microsoft para escribir
+sus pruebas unitarias para ASP.NET Core. La Tabla 7-2 pone xUnit.net en contexto.
+¦¦ Nota Casi todo en las pruebas unitarias es una cuestión de preferencia personal y un tema de vociferación
+desacuerdo. A algunos desarrolladores no les gusta separar sus pruebas unitarias del código de su aplicación y prefieren
+definir pruebas en el mismo proyecto o incluso en el mismo archivo de clase. El enfoque que describo aquí se usa comúnmente
+y es el enfoque que sigo, pero si no se siente bien, debe experimentar con diferentes estilos de prueba
+hasta que encuentres algo que te guste.
+
+
+Tabla 7-2. Poner xUnit.net en contexto
+Pregunta respuesta
+¿Qué es? xUnit.net es un marco de prueba de unidad que se puede usar para probar ASP.NET Core MVC
+aplicaciones.
+¿Por qué es útil? xUnit es un marco de prueba bien escrito que se integra fácilmente en Visual
+Estudio.
+¿Cómo se usa? Las pruebas se definen como métodos anotados con el hecho o la teoría.
+atributo. Dentro del cuerpo del método, los métodos definidos por la clase Assert son
+solía comparar el resultado esperado de una prueba con lo que realmente sucedió.
+¿Hay alguna trampa o
+limitaciones?
+El principal obstáculo con las pruebas unitarias no es aislar efectivamente el componente
+bajo prueba. Consulte la sección "Componentes de aislamiento para pruebas unitarias" para
+más detalles. El mayor problema específico de xUnit.net es la falta de
+documentación. Hay información básica disponible en http: // xunit.
+github.io, pero el uso avanzado requiere un poco de prueba y error.
+¿Hay alguna alternativa? Muchos marcos de prueba están disponibles. Dos alternativas populares son MSTest
+(que proviene de Microsoft) y NUnit.
+
+
+Crear un proyecto de prueba de unidad
+Para las aplicaciones ASP.NET Core, generalmente crea un proyecto de Visual Studio separado para contener las pruebas unitarias,
+cada uno de los cuales se define como un método en una clase de C #. El uso de un proyecto separado significa que puede implementar su
+aplicación sin desplegar también las pruebas.
+Para crear el proyecto de prueba, haga clic con el botón derecho en el elemento de solución WorkingWithVisualStudio en la Solución
+Explorer y seleccione Agregar ? Nuevo proyecto en el menú emergente. Seleccione el proyecto de prueba xUnit (.NET Core)
+plantilla de la categoría Visual C # ? .NET Core, como se muestra en la Figura 7-2.
+
+
+Precaución Asegúrese de seleccionar la plantilla de proyecto correcta. Visual Studio proporciona una serie de plantillas para
+proyectos de prueba de unidad y tienen nombres similares.
+La convención es nombrar el proyecto de prueba de unidad <ApplicationName> .Tests. Establecer el nombre del nuevo
+proyecte a WorkingWithVisualStudio.Tests y haga clic en el botón Aceptar para crear el nuevo proyecto. Estudio visual
+creará el proyecto e instalará los paquetes NuGet para xUnit y sus dependencias.
+Eliminar la clase de prueba predeterminada
+Visual Studio agrega un archivo de clase C # al proyecto de prueba, lo que confundirá los resultados de ejemplos posteriores. Botón derecho del ratón
+el archivo UnitTest1.cs en el proyecto WorkingWithVisualStudio.Tests y seleccione Eliminar en la ventana emergente
+menú. Haga clic en Aceptar cuando se le solicite y Visual Studio eliminará el archivo de clase.
+
+Crear la referencia del proyecto
+Para que las clases del proyecto principal estén disponibles para la prueba, haga clic con el botón derecho en WorkingWithVisualStudio.
+en el Explorador de soluciones y seleccione Agregar ? Referencia en el menú emergente.
+Marque la opción para el elemento WorkingWithVisualStudio en la sección Solución, como se muestra en la Figura 7-3.
+
+
+Haga clic en el botón Aceptar para crear la referencia al proyecto de la aplicación. Puede ver un ícono que funcione
+aparece en el elemento Dependencias para el proyecto de prueba en el Explorador de soluciones, pero esto desaparecerá una vez
+Has construido los proyectos.
+Escritura y ejecución de pruebas unitarias
+Ahora que toda la preparación está completa, puedo escribir algunas pruebas. Para comenzar, agregué un archivo de clase llamado
+ProductTests.cs para el proyecto WorkingWithVisualStudio.Tests y definió la clase que se muestra en el Listado 7-5.
+Esta es una clase simple, pero contiene todo lo necesario para comenzar con las pruebas unitarias.
+
+
+
+El contenido del archivo ProductTests.cs en la carpeta WorkingWithVisualStudio.Tests.
+
+
+Hay dos pruebas unitarias en la clase ProductTests, cada una de las cuales prueba un comportamiento diferente del
+Clase de modelo de producto del proyecto WorkingWithVisualStudio. Un proyecto de prueba puede contener muchas clases,
+cada uno de los cuales puede contener muchas pruebas unitarias.
+Convencionalmente, el nombre de los métodos de prueba describe lo que hace la prueba y el nombre de la clase.
+describe lo que se está probando. Esto facilita estructurar las pruebas en un proyecto y comprender qué
+los resultados de todas las pruebas son cuando son ejecutados por Visual Studio. El nombre ProductTests indica que el
+La clase contiene pruebas para la clase Producto, y los nombres de los métodos indican que prueban la capacidad de cambiar
+El nombre y el precio de un objeto Producto.
+
+
+El atributo de hecho se aplica a cada método para indicar que es una prueba. Dentro del cuerpo del método, un
+la prueba unitaria sigue un patrón llamado organizar, actuar, afirmar (A / A / A). Organizar se refiere a la configuración de las condiciones para
+la prueba, actuar se refiere a realizar la prueba y afirmar se refiere a verificar que el resultado fue el
+esperado.
+Las secciones de organizar y actuar de estas pruebas son código C # normal, pero la sección de afirmación es manejada por
+xUnit.net, que proporciona una clase llamada Assert, cuyos métodos se utilizan para verificar que el resultado de un
+La acción es la que se espera.
+¦¦ Sugerencia El atributo Fact y la clase Asset se definen en el espacio de nombres Xunit, para lo cual debe haber
+una declaración de uso en cada clase de prueba.
+Los métodos de la clase Assert son estáticos y se utilizan para realizar diferentes tipos de comparación.
+entre los resultados esperados y reales. La Tabla 7-3 muestra los métodos Assert más utilizados.
+
+
+Ejecución de pruebas con el Explorador de pruebas
+Visual Studio incluye soporte para encontrar y ejecutar pruebas unitarias a través de la ventana Test Explorer, que es
+disponible a través del menú Test ? Windows ? Test Explorer y que se muestra en la Figura 7-4.
+¦¦ Sugerencia Cree la solución si no ve las pruebas unitarias en la ventana Explorador de pruebas. La compilación desencadena la
+proceso por el cual se descubren las pruebas unitarias.
+
+
+Ejecute las pruebas haciendo clic en Ejecutar todo en la ventana Explorador de pruebas. Visual Studio usará xUnit.net para ejecutar las pruebas
+en el proyecto y mostrar los resultados. Como se señaló, la prueba CanChangeProductPrice contiene un error que causa el
+prueba para fallar. El problema está en los argumentos del método Assert.Equal, que compara el resultado de la prueba con el
+Valor original de la propiedad Price en lugar del valor al que se ha cambiado. El listado 7-6 corrige el problema.
+¦¦ Sugerencia Cuando una prueba falla, siempre es una buena idea verificar la precisión de la prueba antes de mirar el
+componente al que apunta, especialmente si la prueba es nueva o se ha modificado recientemente.
+
+
+Componentes de aislamiento para pruebas unitarias
+Escribir pruebas unitarias para clases de modelos como Producto es fácil. La clase de producto no solo es simple, sino que es autocontenida,
+lo que significa que cuando realizo una acción en un objeto Producto, puedo estar seguro de que estoy
+probando la funcionalidad proporcionada por la clase de Producto.
+La situación es más complicada con otros componentes en una aplicación MVC porque hay
+dependencias entre ellos. El siguiente conjunto de pruebas que defino funcionará en el controlador, examinando el
+secuencia de objetos de Producto que se pasan entre el controlador y la vista.
+Al comparar objetos instanciados a partir de clases personalizadas, necesitará usar xUnit.net Assert.
+Método igual que acepta un argumento que implementa la interfaz IEqualityComparer <T> para que el
+Los objetos pueden ser comparados. Mi primer paso es agregar un archivo de clase llamado Comparer.cs al proyecto de prueba de unidad y
+úselo para definir las clases auxiliares que se muestran en el Listado 7-7.
+Listado 7-7. El contenido del archivo Comparer.cs en la carpeta WorkingWithVisualStudio.Tests.
+
+
+Estas clases me permitirán crear objetos IEqualityComparer <T> utilizando expresiones lambda en lugar de
+que tener que definir una nueva clase para cada tipo de comparación que quiero hacer. Esto no es esencial, pero
+simplificará el código en mis clases de prueba unitarias y las hará más fáciles de leer y mantener.
+Ahora que puedo hacer comparaciones fácilmente, puedo ilustrar el problema de las dependencias entre
+componentes en la aplicación. Agregué una nueva clase llamada HomeControllerTests.cs a WorkingWith
+VisualStudio.Tests proyecto y lo usó para definir la prueba unitaria que se muestra en el Listado 7-8.
+
+
+El archivo HomeControllerTests.cs en la carpeta WorkingWithVisualStudio.Tests.
+
+
+La prueba unitaria en el listado verifica que el método de acción de índice pasa todos los objetos en el repositorio
+a la vista. (Ignore la sección de acto de la prueba por el momento; explico la clase ViewResult y el papel que desempeña
+juega en aplicaciones MVC en el Capítulo 17. Por el momento, es suficiente saber que estoy obteniendo el modelo
+datos devueltos por el método de acción Index.)
+Si ejecuta la prueba, verá que falla, lo que indica que el conjunto de objetos en el repositorio difiere
+del conjunto de objetos devueltos por el método Index. Pero cuando se trata de descubrir por qué falla la prueba,
+hay un problema: se supone que la prueba debe actuar en el controlador de inicio, pero la clase de controlador depende de
+Clase SimpleRepository, que dificulta determinar si la prueba revela un problema con
+la clase a la que se dirige o un problema con otra parte de la aplicación.
+La aplicación de ejemplo es lo suficientemente simple como para que pueda resolver fácilmente el problema simplemente mirando
+en el código para las clases HomeController y SimpleRepository. La inspección visual no es tan fácil en un verdadero
+aplicación, donde la cadena de dependencias puede dificultar la comprensión de lo que hace que falle una prueba.
+Por lo general, el repositorio dependería de algún tipo de sistema de almacenamiento persistente, como una base de datos y un
+biblioteca que proporciona acceso a ella, y una prueba unitaria puede actuar en una cadena completa de componentes complejos, cualquiera de
+lo que podría estar causando el problema
+Las pruebas unitarias son efectivas cuando se dirigen a pequeñas partes de una aplicación, como un método individual
+o clase. Lo que necesito es la capacidad de aislar el controlador de inicio del resto de la aplicación para poder
+limite el alcance de la prueba y descarte cualquier impacto causado por el repositorio.
+Aislar un componente
+La clave para aislar componentes es usar interfaces C #. Para separar el controlador del repositorio, yo
+agregó un nuevo archivo de clase llamado IRepository.cs a la carpeta Modelos y lo usó para definir la interfaz que se muestra
+en el Listado 7-9.
+
+
+Esto puede no parecer un cambio significativo, pero me permite cambiar el repositorio que el controlador
+utiliza durante las pruebas, que es cómo puedo aislar el controlador. En el Listado 7-12, he actualizado el controlador
+pruebas unitarias para que usen una versión especial del repositorio.
+
+
+He definido una implementación falsa de la interfaz IRepository que implementa solo la propiedad I
+necesita la prueba y utiliza datos de prueba que siempre serán consistentes (algo que puede no ser el caso cuando
+trabajando con una base de datos real, especialmente si la está compartiendo con otros desarrolladores que harán sus
+cambios propios).
+La prueba unitaria revisada sigue fallando, lo que indica que el problema es causado por el método de acción Índice en
+la clase HomeController y no los componentes de los que depende. El método de acción sobre el que se está actuando
+La prueba unitaria es lo suficientemente simple como para que el problema sea obvio al inspeccionarlo.
+
+
+El problema es causado por el uso del método LINQ Where, que se utiliza para filtrar cualquier
+Objetos de producto cuya propiedad Price tiene un valor de 50 o más. En este punto, tengo una sólida ventaja en cuanto a
+causa del problema, pero es una buena práctica crear una prueba que confirme el problema antes de realizar un
+cambio correctivo, como se muestra en el Listado 7-13.
+¦¦ Sugerencia Hay mucha duplicación en estas pruebas. Describo cómo simplificar las pruebas en la siguiente sección.
+Listado 7-13. Agregar una prueba a HomeControllerTests.cs en la carpeta WorkingWithVisualStudio.Tests.
+
+
+He definido un nuevo repositorio falso que solo contiene objetos de Producto con valores de Precio que son menores
+de 50 y lo usó en una nueva prueba. Si ejecuta esta prueba, verá que tiene éxito, lo que agrega peso al
+idea de que el problema es causado por el uso del método Where en el método de acción Index.
+En un proyecto real, entender por qué falla una prueba es el punto en el que necesita conciliar el propósito
+de la prueba con la especificación para la aplicación. Es muy posible que el método Index sea
+se supone que debe filtrar los objetos del Producto por Precio, en cuyo caso será necesario revisar la prueba. Este es un común
+resultado, y una prueba fallida no siempre indica un problema real en la aplicación. Por otro lado, si el
+El método de acción de índice no debe filtrar los objetos del modelo, entonces se requiere un cambio correctivo, como se muestra
+en el Listado 7-14.
+
+
+He seguido el estilo de prueba de unidad más utilizado en este capítulo, en el que una aplicación
+la función se escribe y luego se prueba para asegurarse de que funcione según sea necesario. Esto es popular porque la mayoría
+los desarrolladores piensan primero en el código de la aplicación y las pruebas vienen en segundo lugar (esta es ciertamente la categoría
+en el que caigo).
+El problema con este enfoque es que tiende a producir pruebas unitarias que se centran solo en las partes de
+el código de la aplicación que era difícil de escribir o que necesitaba una depuración seria, dejando algunos
+aspectos de una característica solo parcialmente probados o no probados por completo.
+Un enfoque alternativo es Test-Driven Development (TDD). Hay muchas variaciones en TDD, pero
+La idea central es escribir las pruebas para una característica antes de implementar la característica misma. Escribiendo el
+las pruebas primero te hacen pensar más cuidadosamente sobre la especificación que estás implementando y cómo
+sabrá que una característica se ha implementado correctamente. En lugar de sumergirse en la implementación
+detalle, TDD te hace considerar cuáles serán las medidas de éxito o fracaso por adelantado.
+Las pruebas que escriba fallarán inicialmente porque su nueva característica no se implementará. Pero como
+agrega código a la aplicación, sus pruebas se moverán gradualmente de rojo a verde y todas sus pruebas
+pasará cuando la característica esté completa. TDD requiere disciplina, pero produce más
+conjunto completo de pruebas y puede conducir a un código más robusto y confiable.
+
+
+Esto puede parecer mucho trabajo para un problema tan simple, pero la capacidad de probar un problema específico
+El componente es esencial en una aplicación real. Llegar al punto donde ha identificado el problema y
+tener pruebas escritas para validar la corrección solo es posible cuando puede aislar componentes de manera efectiva.
+Mejorando las pruebas unitarias
+La sección anterior introdujo el enfoque básico para escribir pruebas unitarias y ejecutar pruebas en Visual
+Studio y enfatizó la importancia de aislar el componente que se está probando. En esta sección, yo
+presentará algunas herramientas y características más avanzadas que puede usar para escribir pruebas de manera más concisa y
+expresivamente Si te sumerges en la cultura de las pruebas unitarias, entonces puedes terminar con mucho código de prueba
+y la claridad de ese código se vuelve importante, especialmente porque necesitará revisar las pruebas para reflejar los cambios
+en la aplicación a la que se aplican durante el desarrollo y el mantenimiento.
+Parametrización de una prueba unitaria
+Las pruebas que escribí para la clase HomeController revelaron un problema que solo estaba presente para algunos datos
+valores. Para probar esta condición, terminé creando dos pruebas similares, cada una de las cuales tenía su propio falso
+repositorio. Este es un enfoque duplicado, especialmente porque la única diferencia entre estas pruebas es el conjunto
+de valores decimales utilizados para las propiedades Price de los objetos Product en los repositorios falsos.
+xUnit.net proporciona soporte para pruebas parametrizadas, donde los datos utilizados en una prueba se eliminan del
+prueba para que se pueda usar un solo método para múltiples pruebas. En el Listado 7-15, he usado la prueba parametrizada
+característica para eliminar la duplicación en las pruebas para la clase HomeController.
+Listado 7-15. Parametrización de una prueba unitaria en el archivo HomeControllerTests.cs en el proyecto de pruebas.
+
+
+Parametrización de una prueba unitaria en el archivo HomeControllerTests.cs en el proyecto de pruebas.
+
+
+
+Las pruebas unitarias parametrizadas se denotan con el atributo de teoría en lugar del atributo de hecho que es
+utilizado para pruebas estándar. También he usado el atributo InlineData, que me permite especificar valores para
+argumentos definidos por el método de prueba unitaria. C # restringe la forma en que los valores de datos se expresan en atributos,
+así que definí cuatro argumentos decimales en el método de prueba y usé el atributo InlineData para proporcionar
+valores para ellos. Utilizo los valores decimales dentro del método de prueba para generar una matriz de objetos Product,
+que utilizo para establecer la propiedad Products del objeto falso del repositorio.
+Cada atributo en línea define una prueba de unidad separada que se muestra como un elemento distinto en Visual Studio
+Test Explorer, como lo ilustra la Figura 7-7. La entrada del Explorador de pruebas revela los valores que se usarán para la unidad
+argumentos del método de prueba.
+
+
+Obtención de datos de prueba de un método o propiedad
+Las limitaciones impuestas a la expresión de datos en atributos restringen la utilidad del atributo InlineData,
+pero un enfoque alternativo es crear un método estático o una propiedad que devuelva el objeto requerido para
+pruebas. En esta situación, no hay restricciones en la forma en que se definen los datos, y puede crear un
+rango de valores de prueba. Para demostrar cómo funciona esto, agregué un archivo de clase llamado ProductTestData.cs al
+proyecto de prueba de unidad y lo usó para definir la clase que se muestra en el Listado 7-16.
+
+
+Las pruebas unitarias parametrizadas se denotan con el atributo de teoría en lugar del atributo de hecho que es
+utilizado para pruebas estándar. También he usado el atributo InlineData, que me permite especificar valores para
+argumentos definidos por el método de prueba unitaria. C # restringe la forma en que los valores de datos se expresan en atributos,
+así que definí cuatro argumentos decimales en el método de prueba y usé el atributo InlineData para proporcionar
+valores para ellos. Utilizo los valores decimales dentro del método de prueba para generar una matriz de objetos Product,
+que utilizo para establecer la propiedad Products del objeto falso del repositorio.
+Cada atributo en línea define una prueba de unidad separada que se muestra como un elemento distinto en Visual Studio
+Test Explorer, como lo ilustra la Figura 7-7. La entrada del Explorador de pruebas revela los valores que se usarán para la unidad
+argumentos del método de prueba.
+
+
+Obtención de datos de prueba de un método o propiedad
+Las limitaciones impuestas a la expresión de datos en atributos restringen la utilidad del atributo InlineData,
+pero un enfoque alternativo es crear un método estático o una propiedad que devuelva el objeto requerido para
+pruebas. En esta situación, no hay restricciones en la forma en que se definen los datos, y puede crear un
+rango de valores de prueba. Para demostrar cómo funciona esto, agregué un archivo de clase llamado ProductTestData.cs al
+proyecto de prueba de unidad y lo usó para definir la clase que se muestra en el Listado 7-16.
+
+
+Los datos de prueba se proporcionan a través de una clase que implementó la interfaz IEnumerable <object []>, que
+devuelve una secuencia de matrices de objetos. Cada conjunto de objetos en la secuencia contiene un conjunto de argumentos que
+será pasado a un método de prueba. Voy a redefinir mi método de prueba para que acepte una variedad de productos
+objetos, que agrega otra capa a los datos de prueba. La capa es una enumeración de matrices de objetos, cada una de las cuales
+contiene una sola matriz de objetos de Producto. Esta profundidad de estructura en los datos de prueba puede ser confusa, pero es
+importante hacerlo bien porque sus pruebas no funcionarán si la cantidad de argumentos que Xunit.net intenta pasar
+al método de prueba no coincide con la firma del método.
+Me gusta estructurar mis clases de datos de prueba para que los métodos o propiedades privadas definan conjuntos individuales
+de datos de prueba, que luego se combina en secuencias de matrices de objetos mediante el método GetEnumerator. A
+Para demostrar diferentes técnicas, he creado matrices de objetos de Producto utilizando un método y un
+propiedad, pero tiendo a utilizar un enfoque en mis propios proyectos (la elección de los cuales depende del tipo de
+datos con los que estoy probando). El Listado 7-17 muestra cómo puedo usar la clase de datos de prueba con el atributo Teoría para
+Configurar mis pruebas.
+
+
+Si desea incluir los datos de prueba en la misma clase que las pruebas unitarias, puede usar el
+Atributo MemberData en lugar de ClassData. El atributo MemberData se configura mediante una cadena que especifica
+el nombre de un método estático que proporcionará un IEnumerable <object []>, donde cada matriz de objetos en el
+La secuencia es un conjunto de argumentos para el método de prueba.
+
+
+El atributo ClassData se configura con el tipo de la clase de datos de prueba, que es ProductTestData en
+este caso. Cuando se ejecutan las pruebas, Xunit.net creará una nueva instancia de la clase ProductTestData y usará
+para obtener la secuencia de datos de prueba para la prueba.
+¦¦ Nota Si observa la lista de pruebas en el Explorador de pruebas, verá que hay una sola entrada para
+Pruebas IndexActionModelIsComplete, aunque la clase ProductTestData proporciona dos conjuntos de pruebas
+datos. Esto sucede cuando los objetos de datos de prueba no se pueden serializar y se pueden resolver aplicando el
+Atributo serializable a los objetos de prueba.
+Mejora de implementaciones falsas
+Aislar componentes efectivamente requiere implementaciones falsas de clases para proporcionar datos de prueba o verificar
+que un componente se comporta como debería. En ejemplos anteriores, creé una clase que implementó el
+Interfaz IRepository. Este puede ser un enfoque efectivo, pero conduce a la creación de clases de implementación
+para cada tipo de prueba que desee ejecutar. Como ejemplo, el Listado 7-18 muestra la adición de una prueba que verifica
+que el método de acción Índice llama al método Productos en el repositorio solo una vez. (Este tipo de prueba es
+común cuando existe la preocupación de que un componente esté haciendo consultas duplicadas al repositorio, lo que lleva a
+múltiples consultas de bases de datos).
+Listado 7-18. Agregar una prueba unitaria al archivo HomeControllerTests.cs en la carpeta de pruebas.
+
+
+
+

@@ -1,0 +1,6 @@
+--Razor --> Es el motor de visualización responsable de incorporar datos en HTML documentos.
+
+Las expresiones de Razor comienzan con el carácter @. En este caso, la expresión @model declara el tipo de
+objeto modelo que pasaré a la vista desde el método de acción.
+
+--ViewBag --> Es una propiedad de tipo dinámico de la clase ControllerBase que es la clase base de todos los controladores.

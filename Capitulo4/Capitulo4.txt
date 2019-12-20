@@ -1,0 +1,8 @@
+--IEnumerable --> Es una interfaz que define un método, GetEnumerator.Esto permite el acceso de solo lectura a una 
+colección.
+
+using System.Threading.Tasks --> Para permitirle crear tareas y ejecutarlas de forma asincrónica.
+
+GetType -->  es un método en objeto. Este programa nos ayuda a comprender la clase base y la relación de clase derivada.
+
+GetAsync --> Método que envía una solicitud GET al Url especificado como una operación asincrónica.

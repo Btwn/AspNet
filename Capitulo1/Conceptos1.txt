@@ -1,0 +1,17 @@
+--ASP.NET Core MVC --> Es un marco de desarrollo de aplicaciones web de Microsoft que combina la
+efectividad y orden de la arquitectura, ideas y técnicas de modelo-vista-controlador (MVC).
+
+--Modelo Vista Controlador(MVC) --> Es un estilo de arquitectura de software que separa los datos de una aplicación,
+la interfaz de usuario, y la lógica de control en tres componentes distintos.
+
+--El Modelo --> Contiene una representación de los datos que maneja el sistema, su lógica de negocio, y sus mecanismos
+de persistencia.
+
+--La Vista --> O interfaz de usuario, que compone la información que se envía al cliente y los mecanismos interacción con 
+éste.
+
+--El Controlador --> Actúa como intermediario entre el Modelo y la Vista, gestionando el flujo de información entre 
+ellos y las transformaciones para adaptar los datos a las necesidades de cada uno.
+
+
+

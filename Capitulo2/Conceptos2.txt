@@ -1,0 +1,16 @@
+--IActionResult --> Es una interfaz, podemos crear una respuesta personalizada como devolución, cuando usa ActionResult 
+solo puede devolver las predefinidas para devolver una Vista o un recurso.
+
+--ActionResult --> Es una clase abstracta y los resultados de acción como ViewResult, 
+PartialViewResult, JsonResult, etc., se derivan de ActionResult. Es una implementación de IActionResult.
+
+--HttpGet y HttpPost --> ambos son el método de publicar datos del cliente o datos del formulario en el servidor.
+
+--HttpGet --> Envía datos utilizando una cadena de consulta. Los datos se adjuntan a la URL y son visibles para 
+todos los usuarios.
+
+--HTTPPost --> Oculta información de la URL y no une datos a la URL. Es más seguro que el método HttpGet, pero es más lento
+ que HttpGet. Solo es útil cuando pasa información confidencial al servidor.
+
+--INQ (Language Integrated Query) --> Es una sintaxis de consulta uniforme en C # y VB.NET para recuperar datos de 
+diferentes fuentes y formatos. Devuelven resultados como objetos.

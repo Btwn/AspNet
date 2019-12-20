@@ -1,0 +1,424 @@
+cap6...
+En este capítulo, describo las características clave que Visual Studio proporciona para desarrollar ASP.NET Core MVC
+proyectos La Tabla 6-1 resume el capítulo.
+
+
+Listado de soluciones de problemas
+Agregar paquetes a un proyecto Use la herramienta NuGet para paquetes .NET
+y Bower para paquetes del lado del cliente
+6-8
+Ver el efecto de los cambios de vista o clase Usar el modelo de desarrollo iterativo 9–11
+Mostrar mensajes detallados en el navegador Usar páginas de excepción de desarrollador 12
+Obtenga información detallada y control sobre
+ejecución de la aplicación
+Use el depurador 13
+Vuelva a cargar uno o más navegadores con Visual Studio Use Browser Link 14–15
+Reduzca el número de solicitudes HTTP y el
+cantidad de ancho de banda requerida para JavaScript y
+Archivos CSS
+
+
+Preparando el proyecto de ejemplo
+Para este capítulo, creé un nuevo proyecto de aplicación web ASP.NET Core (.NET Core) llamado Working
+WithVisualStudio utilizando la plantilla vacía. Habilité MVC con su configuración predeterminada en Startup.cs
+archivo, como se muestra en el Listado 6-1.
+Listado 6-1. Habilitar MVC en el archivo Startup.cs en la carpeta WorkingWithVisualStudio.
+
+
+Para crear una tienda simple de objetos Product, agregué un archivo de clase llamado SimpleRepository.cs a
+Carpeta de modelos y la usó para definir la clase que se muestra en el Listado 6-3.
+Listado 6-3. El contenido del archivo SimpleRepository.cs en la carpeta Modelos.
+
+
+Esta clase almacena objetos del modelo en la memoria, lo que significa que cualquier cambio en el modelo se pierde cuando
+la aplicación se detiene o reinicia. Una tienda no persistente es suficiente para los ejemplos en este capítulo,
+pero no es un enfoque que pueda usarse en muchos proyectos reales; vea el Capítulo 8 para ver un ejemplo de cómo crear un
+repositorio que almacena objetos de modelo de forma persistente utilizando una base de datos relacional.
+¦¦ Nota En el Listado 6-3, definí una propiedad estática llamada SharedRepository que proporciona acceso a un solo
+Objeto SimpleRepository que se puede usar en toda la aplicación. Esta no es la mejor práctica, pero quiero
+demostrar un problema común que encontrará en el desarrollo de MVC; Describo una mejor manera de trabajar
+con componentes compartidos en el Capítulo 18.
+
+
+Hay una sola acción, llamada Índice, que obtiene todos los objetos del modelo y los pasa a la Vista
+Método para representar la vista predeterminada. Para agregar esa vista, creé la carpeta Vistas / Inicio y agregué un archivo de vista
+llamado Index.cshtml, cuyo contenido se muestra en el Listado 6-5.
+
+
+La vista contiene una tabla que usa un bucle Forez de Razor para crear filas para cada objeto modelo, donde
+cada fila contiene celdas para las propiedades Nombre y Precio. Si ejecuta la aplicación de ejemplo, verá
+Los resultados se muestran en la Figura 6-1.
+
+
+Administrar paquetes de software
+Hay dos tipos diferentes de paquetes de software necesarios para los proyectos ASP.NET Core MVC. En las secciones que
+A continuación, describo cada tipo de paquete y las herramientas que proporciona Visual Studio para administrarlos.
+Entendiendo NuGet
+Visual Studio proporciona una herramienta gráfica para administrar los paquetes .NET que se incluyen en un proyecto. A
+abra la herramienta, seleccione Administrar paquetes NuGet para solución en el menú Herramientas ? Administrador de paquetes NuGet.
+La herramienta NuGet se abre y muestra una lista de los paquetes que ya están instalados, como se muestra en la Figura 6-2.
+
+
+La pestaña Instalado proporciona un resumen de los paquetes que ya están instalados en el proyecto. los
+La pestaña Examinar puede usarse para localizar e instalar nuevos paquetes, y la pestaña Actualizaciones puede usarse para enumerar paquetes
+para el cual se han lanzado versiones más recientes.
+
+
+Si ha utilizado versiones anteriores de ASP.NET Core, se habrá familiarizado con la necesidad de agregar un
+larga lista de paquetes NuGet para un nuevo proyecto. ASP.NET Core 2 adopta un enfoque diferente y se basa en un
+paquete único llamado Microsoft.AspNetCore.All.
+El paquete Microsoft.AspNetCore.All es un metapaquete que contiene todos los NuGet individuales.
+paquetes requeridos por ASP.NET Core y el marco MVC, lo que significa que no necesita agregar
+paquetes uno por uno. Cuando publica su aplicación, cualquier paquete individual que forme parte de
+Se eliminará el metapaquete que no haya sido utilizado por la aplicación, asegurando que no despliegue más
+paquetes que necesitas
+
+
+Comprender la lista de paquetes NuGet y su ubicación
+La herramienta NuGet realiza un seguimiento de los paquetes del proyecto en el archivo <projectname> .csproj, donde
+<projectname> se reemplaza por el nombre del proyecto. Para la aplicación de ejemplo, esto significa que los detalles
+de los paquetes NuGet se almacenan en un archivo llamado WorkingWithVisualStudio.csproj. Visual Studio no
+muestra el archivo .csproj en la ventana del Explorador de soluciones. Para editar el archivo, haga clic con el botón derecho en el elemento del proyecto en
+Ventana del Explorador de soluciones y seleccione Editar WorkingWithVisualStudio.csproj en el menú emergente. Visual
+Studio abrirá el archivo para editarlo. El archivo .csproj es XML, y verá un elemento como este que
+agrega el metapaquete ASP.NET Core al proyecto, así:
+
+
+Un paquete se especifica con su nombre y el número de versión que se requiere. Aunque el metapaquete
+incluye todas las características requeridas para ASP.NET Core MVC, aún tendrá que agregar paquetes a
+proyecto para que se puedan utilizar funciones adicionales. Los paquetes se pueden agregar utilizando la interfaz que se muestra en la Figura 6-2
+o usando herramientas de línea de comandos. También puede editar el archivo .csproj directamente y Visual Studio detectará cambios
+y descargue e instale los paquetes add.
+Cuando usa NuGet para agregar un paquete a un proyecto, se instala automáticamente junto con cualquier paquete
+depende de. Puede explorar los paquetes NuGet y sus dependencias abriendo las dependencias ?
+Elemento NuGet en el Explorador de soluciones, que muestra cada uno de los paquetes en el archivo .csproj y sus dependencias.
+El metapaquete ASP.NET Core tiene una gran cantidad de dependencias, algunas de las cuales se pueden ver en la Figura 6-3.
+
+
+
+Realizar cambios en las vistas de afeitar
+Durante el desarrollo, los cambios en las vistas de Razor surtirán efecto tan pronto como se reciba una solicitud HTTP del
+navegador. Para demostrar cómo funciona esto, inicie la aplicación seleccionando Iniciar depuración desde la depuración
+menú y, una vez que se ha abierto una pestaña del navegador y se muestran los datos, realice los cambios que se muestran en el Listado 6-9
+al archivo Index.cshtml.
+Listado 6-9. Realizar cambios en el archivo Index.cshtml
+
+
+Guarde los cambios en la vista de índice y vuelva a cargar la página web con el botón de recarga del navegador. los
+cambios en la vista (la adición de un elemento de encabezado y el formato de la propiedad del modelo Precio como
+moneda) surten efecto y se muestran en el navegador, como se ilustra en la Figura 6-8.
+¦¦ Consejo Explico el proceso mediante el cual las vistas de Razor se preparan para su uso en el Capítulo 21.
+
+
+Realizar cambios en las clases de C #
+Para las clases de C #, incluidos los controladores y modelos, la forma en que se manejan los cambios depende de cómo
+iniciar la aplicación En las secciones que siguen, describo los dos enfoques disponibles, que se seleccionan
+a través de diferentes elementos en el menú Depurar, como se describe en la Tabla 6-3 para una referencia rápida.
+
+
+Descripción del elemento del menú
+Comenzar sin depuración Las clases en el proyecto se compilan automáticamente cuando una solicitud HTTP
+se recibe, lo que permite una experiencia de desarrollo más dinámica. los
+la aplicación se ejecuta sin el depurador, que no se puede usar para tomar el control
+de ejecución de código.
+Iniciar depuración Debe compilar explícitamente su proyecto y reiniciar la aplicación para
+Los cambios surtirán efecto. El depurador se adjunta a la aplicación cuando
+ejecuta, permitiendo la inspección de su estado y el análisis de cualquier problema.
+
+
+Compilar clases automáticamente
+Durante el desarrollo normal, un ciclo iterativo rápido le permite ver el efecto de sus cambios de inmediato,
+si es el efecto de agregar una nueva acción o cambiar la forma en que se seleccionan los datos del modelo de vista. Para esto
+tipo de desarrollo, Visual Studio admite la detección de cambios tan pronto como se reciba una solicitud HTTP de
+el navegador y las clases de recompilación automáticamente. Para ver cómo funciona esto, seleccione Iniciar sin depurar
+desde el menú Visual Studio Debug. Una vez que el navegador muestre los datos de la aplicación, realice los cambios.
+se muestra en el Listado 6-10 al controlador de inicio.
+Listado 6-10. Filtrar datos del modelo en el archivo HomeController.cs
+
+
+La función de compilación automatizada es útil cuando todo va a planearse. El inconveniente es que
+los errores de compilación y tiempo de ejecución se muestran en el navegador en lugar de Visual Studio, lo que puede dificultar
+para descubrir qué sucede cuando hay un problema. Como ejemplo, el Listado 6-11 muestra la adición de un
+referencia nula a la colección de objetos modelo en el repositorio.
+Listado 6-11. Agregar una referencia nula en el archivo SimpleRepository.cs
+
+
+Un problema como una referencia nula no aparecerá hasta que la aplicación se esté ejecutando. Recargando el
+la página del navegador hará que se compile la clase SimpleRepository y se reiniciará la aplicación.
+Cuando MVC crea una instancia de la clase de controlador para procesar la solicitud HTTP desde el navegador, el
+El constructor HomeController instanciará la clase SimpleRepository, que, a su vez, intentará procesar
+la referencia nula agregada en el listado. El valor nulo causa un problema, pero no es obvio cuál es el
+El problema se debe a que el navegador no muestra un mensaje útil.
+Habilitación de páginas de excepción de desarrollador
+Durante el proceso de desarrollo, puede ser útil mostrar información más útil en el navegador
+ventana cuando hay un problema. Esto se puede hacer habilitando las páginas de excepción de desarrollador, que requieren un
+cambio de configuración en la clase de Inicio, como se muestra en el Listado 6-12.
+Explico el papel de la clase Startup en detalle en el Capítulo 14, pero por ahora, es suficiente saber que
+llamar al método de extensión UseDeveloperExceptionPage configura las páginas de error descriptivo.
+Listado 6-12. Habilitación de páginas de excepción de desarrollador en el archivo Startup.cs
+
+
+Si vuelve a cargar la ventana del navegador, el proceso de compilación automática reconstruirá la aplicación.
+y generar un mensaje de error más útil en el navegador, como se muestra en la Figura 6-10.
+
+
+El mensaje de error que muestra el navegador puede ser suficiente para resolver problemas simples, especialmente
+dado que el estilo iterativo de desarrollo significa que los cambios más recientes realizados probablemente sean la causa.
+Pero para problemas más complejos, y para problemas que no se vuelven aparentes de inmediato, el Visual
+Se requiere depurador de estudio.
+Usando el depurador
+Visual Studio también admite la ejecución de una aplicación MVC utilizando un depurador, lo que permite que la ejecución sea
+se detuvo para inspeccionar el estado de la aplicación y la ruta que sigue una solicitud a través del código. Esto requiere
+un estilo diferente de desarrollo porque las modificaciones a las clases de C # no se aplican hasta que la aplicación es
+reiniciado (aunque los cambios en las vistas de Razor todavía surten efecto automáticamente).
+Este estilo de desarrollo no es tan dinámico como el uso de la función de compilación automática, sino visual
+El depurador de Studio es excelente y puede proporcionar información más profunda sobre el funcionamiento de una aplicación.
+Para ejecutar una aplicación con el depurador, seleccione Iniciar depuración en el menú Depuración de Visual Studio.
+Visual Studio compilará las clases de C # en el proyecto antes de iniciar la aplicación, pero también puede
+compile manualmente su código utilizando los elementos en el menú Generar.
+
+
+La aplicación de ejemplo todavía contiene la referencia nula, lo que significa que el no manejado
+La excepción NullReferenceException que lanza la clase SimpleRepository interrumpirá la aplicación y
+pasar el control de ejecución al desarrollador, como se muestra en la Figura 6-11.
+¦¦ Sugerencia Si el depurador no intercepta la excepción, seleccione Windows Settings Configuración de excepción de
+el menú Visual Studio Debug y asegúrese de que todos los tipos de excepción en Common Language Runtime
+La lista de excepciones está marcada.
+
+
+Establecer un punto de interrupción
+El depurador no indica la causa raíz del problema, solo donde se manifestó. La declaración
+que los aspectos destacados de Visual Studio indican que el problema ocurre cuando se filtran los objetos usando LINQ, pero un
+Se requiere poco trabajo para profundizar en los detalles y llegar a la causa subyacente.
+Un punto de interrupción es una instrucción que le dice al depurador que detenga la ejecución de la aplicación y la mano
+control al programador. Puede inspeccionar el estado de la aplicación y ver qué sucede y,
+opcionalmente, reanudar la ejecución nuevamente.
+Para crear un punto de interrupción, haga clic con el botón derecho en una instrucción de código y seleccione Punto de interrupción ? Insertar punto de interrupción en
+menú emergente. Como demostración, aplique un punto de interrupción al método AddProduct en SimpleRepository
+clase, como se muestra en la Figura 6-12.
+
+
+Seleccione Depurar ? Iniciar depuración para iniciar la aplicación utilizando el depurador o Depurar ? Reiniciar si el
+La aplicación ya se está ejecutando. Durante la solicitud HTTP inicial del navegador, el SimpleRepository
+se instanciará la clase y la ejecución del código alcanzará el punto de interrupción, en cuyo punto la ejecución
+de la aplicación se detendrá.
+En este punto, puede usar los elementos del menú Depuración de Visual Studio o los controles en la parte superior de la ventana
+para controlar la ejecución de la aplicación o usar las diferentes vistas de depurador disponibles a través de Debug ?
+Menú de Windows para inspeccionar el estado de la aplicación.
+Visualización de valores de datos en el editor de código
+El uso más común para los puntos de interrupción es rastrear errores en su código. Antes de que puedas arreglar un error, tienes
+para descubrir qué está pasando, y una de las características más útiles que proporciona Visual Studio es la capacidad de
+ver y monitorear los valores de las variables directamente en el editor de código.
+Si mueve el mouse sobre el argumento p al método AddProduct resaltado por el depurador, un
+aparecerá una ventana emergente que le muestra el valor actual de p, como se muestra en la Figura 6-13. Puede ser difícil distinguir
+la ventana emergente, así que he mostrado una versión ampliada en la figura.
+
+
+Esto puede no parecer impresionante ya que el objeto de datos está definido en el mismo constructor que el
+punto de interrupción, pero esta característica funciona para cualquier variable. Puede explorar valores para ver su propiedad y
+valores de campo. Cada valor tiene un pequeño botón de pin a su derecha que puede usar para monitorear un valor cuando el código
+La ejecución continúa.
+Pase el mouse sobre la variable p y fije la Referencia del producto. Expanda la referencia anclada para
+que también puede anclar las propiedades Nombre y Precio, creando el efecto que se muestra en la Figura 6-14.
+
+
+Seleccione Continuar en el menú Visual Studio Debug para continuar la ejecución de la aplicación. Desde el
+la aplicación está ejecutando un bucle foreach, la ejecución se detendrá nuevamente cuando se encuentre el punto de interrupción
+otra vez. Los valores anclados muestran cómo cambia el objeto asignado a la variable p y sus propiedades, como
+ilustrado en la figura 6-15.
+
+
+Usar la ventana de locales
+Una característica relacionada es la ventana Locales, que se abre seleccionando el menú Depurar ? Windows ? Locales
+ít. La ventana Locales muestra valores de datos de forma similar a la fijación, pero muestra todos los valores locales.
+objetos relativos al punto de ruptura, como se muestra en la Figura 6-16.
+
+
+Cada vez que seleccione Continuar, se reanudará la ejecución de la aplicación y se ejecutará otro objeto.
+ser procesado por el bucle foreach. Si continúa, verá aparecer la referencia nula, tanto en el
+Ventana de locales y en los valores anclados que se muestran en el editor de código. Al usar el depurador para controlar el
+ejecución de la aplicación, puede seguir el flujo a través de su código y tener una idea de lo que está sucediendo.
+Podría solucionar el problema de referencia nula limpiando la colección de objetos de Producto, pero un
+Un enfoque alternativo es hacer que el controlador sea más robusto, como se muestra en el Listado 6-13, donde he aplicado
+el operador condicional nulo para verificar valores nulos (como se describe en el Capítulo 4).
+Listado 6-13. Solucionar el problema de referencia nulo en el archivo HomeController.cs
+
+
+Este es un problema simple de resolver en comparación con los problemas que requieren la búsqueda real de errores, pero el
+El depurador de Visual Studio es excelente, y al usar las diferentes vistas de la aplicación que son
+disponible y controlando la ejecución, realmente puede profundizar en los detalles para descubrir qué está yendo mal.
+Uso del enlace del navegador
+La función de enlace del navegador puede simplificar el proceso de desarrollo al colocar uno o más navegadores debajo de
+control de Visual Studio. Esta característica es especialmente útil si necesita ver el efecto de los cambios en un rango de
+navegadores La función de enlace del navegador funciona con o sin el depurador, pero me resulta más útil cuando uso
+la función de compilación automática de clases porque significa que puedo modificar cualquier archivo en el proyecto y ver el
+efecto del cambio sin tener que cambiar al navegador y volver a cargar la página manualmente.
+Configuración del enlace del navegador
+La activación del enlace del navegador requiere un cambio de configuración en la clase de inicio, como se muestra en el Listado 6-14.
+
+
+Cada vez que seleccione Continuar, se reanudará la ejecución de la aplicación y se ejecutará otro objeto.
+ser procesado por el bucle foreach. Si continúa, verá aparecer la referencia nula, tanto en el
+Ventana de locales y en los valores anclados que se muestran en el editor de código. Al usar el depurador para controlar el
+ejecución de la aplicación, puede seguir el flujo a través de su código y tener una idea de lo que está sucediendo.
+Podría solucionar el problema de referencia nula limpiando la colección de objetos de Producto, pero un
+Un enfoque alternativo es hacer que el controlador sea más robusto, como se muestra en el Listado 6-13, donde he aplicado
+el operador condicional nulo para verificar valores nulos (como se describe en el Capítulo 4).
+Listado 6-13. Solucionar el problema de referencia nulo en el archivo HomeController.cs
+
+
+
+Este es un problema simple de resolver en comparación con los problemas que requieren la búsqueda real de errores, pero el
+El depurador de Visual Studio es excelente, y al usar las diferentes vistas de la aplicación que son
+disponible y controlando la ejecución, realmente puede profundizar en los detalles para descubrir qué está yendo mal.
+Uso del enlace del navegador
+La función de enlace del navegador puede simplificar el proceso de desarrollo al colocar uno o más navegadores debajo del
+control de Visual Studio. Esta característica es especialmente útil si necesita ver el efecto de los cambios en un rango de
+navegadores La función de enlace del navegador funciona con o sin el depurador, pero me resulta más útil cuando uso
+la función de compilación automática de clases porque significa que puedo modificar cualquier archivo en el proyecto y ver el
+efecto del cambio sin tener que cambiar al navegador y volver a cargar la página manualmente.
+Configuración del enlace del navegador
+La activación del enlace del navegador requiere un cambio de configuración en la clase de inicio, como se muestra en el Listado 6-14.
+
+
+Si no ve la sección adicional, seleccione Habilitar enlace del navegador en el menú que se muestra en la Figura 6-18
+y vuelva a cargar el navegador.
+
+
+Visual Studio agrega un par de elementos de script al HTML enviado al navegador, que se utilizan para abrir
+una conexión HTTP de larga duración de vuelta al servidor de aplicaciones para que Visual Studio pueda forzar al navegador a
+Vuelva a cargar la página. (Si no ve los elementos del script, asegúrese de que la opción Habilitar enlace del navegador esté seleccionada
+en el menú que se muestra en la Figura 6-18.) El Listado 6-15 muestra un cambio en la vista de Índice que ilustrará el
+efecto del uso del enlace del navegador.
+
+
+
+El código JavaScript incrustado en el HTML enviado al navegador volverá a cargar la página, mostrando el efecto
+de la adición, que es agregar una marca de tiempo simple. Cada vez que selecciona el elemento de menú de Visual Studio, el
+el navegador realizará una nueva solicitud al servidor. La solicitud dará como resultado que la vista de índice se represente en
+generar una nueva página HTML con una marca de tiempo actualizada.
+¦¦ Tenga en cuenta que los elementos de script del enlace del navegador están incrustados solo en respuestas exitosas, lo que significa que
+se genera una excepción al compilar una clase, al representar una vista Razor o al manejar una solicitud, luego la conexión
+entre el navegador y Visual Studio se pierde y tendrá que volver a cargar la página usando el navegador una vez que
+Han resuelto el problema.
+Usar múltiples navegadores
+Browser Link se puede usar para mostrar una aplicación en varios navegadores simultáneamente, lo que puede ser
+útil cuando desea resolver las diferencias de implementación entre navegadores o ver cómo es una aplicación
+renderizado en una combinación de navegadores de escritorio y móviles.
+Para elegir los navegadores que se utilizarán, seleccione Examinar con del botón IIS Express en Visual
+Barra de herramientas de Studio, como se muestra en la Figura 6-19
+
+
+Visual Studio muestra una lista de los navegadores que conoce. La Figura 6-20 muestra los navegadores que tengo
+instalado en mi sistema, algunos de los cuales están instalados con Windows (Internet Explorer y Edge) y otros
+que instalo porque son de uso generalizado.
+
+
+Visual Studio busca navegadores comunes durante el proceso de instalación, pero puede usar Agregar
+botón para configurar navegadores que no se descubrieron automáticamente. También puedes configurar pruebas de terceros
+herramientas como Browser Stack, que ejecuta navegadores en máquinas virtuales alojadas en la nube para que no tenga que
+administrar una gran matriz de sistemas operativos y navegadores para realizar pruebas.
+Seleccioné tres navegadores en la figura: Chrome, Internet Explorer y Edge. Al hacer clic en el botón Examinar
+inicia los tres navegadores y hace que carguen la URL de la aplicación de ejemplo, como se muestra en la Figura 6-21.
+
+
+Puede ver qué navegadores gestiona Browser Link seleccionando el menú Panel de control de Browser Link
+elemento, que abre la ventana que se muestra en la Figura 6-22. El panel muestra la URL que muestra cada
+navegador, y cada navegador se puede actualizar individualmente.
+
+
+Preparación de JavaScript y CSS para la implementación
+Cuando crea la parte del lado del cliente de una aplicación web, generalmente creará una serie de
+Archivos JavaScript y CSS, que se utilizan para complementar los de los paquetes instalados por Bower. Estas
+los archivos requieren procesamiento para optimizarlos para la entrega en un entorno de producción con el fin de minimizar
+la cantidad de solicitudes HTTP y la cantidad de ancho de banda de red requerida para entregarlas al cliente.
+Este proceso se conoce como agrupación y minificación. En esta sección, explico cómo habilitar la entrega de estática
+contenido y cómo ese contenido puede prepararse para la implementación.
+
+
+Habilitación de la entrega de contenido estático
+ASP.NET Core incluye soporte para entregar archivos estáticos desde la carpeta wwwroot a los clientes, pero no es
+habilitado por defecto cuando la plantilla Vacío se usa para crear el proyecto. Habilita el soporte para contenido estático
+agregando la declaración que se muestra en el Listado 6-16 a la clase de Inicio.
+Listado 6-16. Habilitar contenido estático en el archivo Startup.cs en la carpeta Working WithVisualStudio
+
+
+Agregar contenido estático al proyecto
+Para demostrar el proceso de agrupación y minificación, necesito agregar contenido estático al proyecto y
+incorporarlo a la aplicación de ejemplo. Primero, creé la carpeta wwwroot / css, que es la convencional
+ubicación para archivos CSS personalizados. Luego agregué un archivo llamado first.css usando la plantilla de elementos de la Hoja de Estilo, como
+se muestra en la figura 6-23. La plantilla de la hoja de estilo se encuentra en la sección ASP.NET Core ? Web ? Contenido.
+
+
+Repetí el proceso para crear otra hoja de estilo llamada second.css en la carpeta wwwroot / css, con
+el contenido que se muestra en el Listado 6-18.
+Listado 6-18. El contenido del archivo second.css en la carpeta wwwroot / css
+
+
+Los archivos JavaScript personalizados se almacenan convencionalmente en la carpeta wwwroot / js. Creé esta carpeta y usé
+la plantilla de elementos del archivo JavaScript para crear un archivo llamado third.js, como se muestra en la Figura 6-24. El archivo JavaScript
+La plantilla se encuentra en la sección ASP.NET Core ? Web ? Scripts.
+
+
+
+agregó un código JavaScript simple al nuevo archivo, como se muestra en el Listado 6-19.
+Listado 6-19. El contenido del archivo third.js en la carpeta wwwroot / j
+
+
+Necesito un archivo JavaScript más. Creé un archivo llamado 4th.js en la carpeta wwroot / js y agregué el
+código que se muestra en el Listado 6-20.
+
+
+Si ejecuta la aplicación de ejemplo, verá el contenido que se muestra en la Figura 6-25. El contenido existente
+ha sido diseñado por las hojas de estilo CSS, y el código JavaScript ha agregado nuevo contenido.
+
+
+Agrupación y minimización en aplicaciones MVC
+En este momento, hay cuatro archivos estáticos, y el navegador tiene que hacer cuatro solicitudes para obtener la estática.
+archivos Y cada uno de esos archivos requiere más ancho de banda del que debería entregarse al cliente porque
+contienen espacios en blanco y nombres de variables que son significativos para el desarrollador pero que no tienen importancia
+al navegador
+La combinación de archivos del mismo tipo se llama agrupación. Hacer archivos más pequeños se llama minificación. Ambos
+estas tareas se realizan en aplicaciones ASP.NET Core MVC mediante la extensión Bundler & Minifier para Visual
+Estudio.
+Instalar la extensión de Visual Studio
+El primer paso es instalar una extensión. Seleccione el menú Herramientas ? Extensiones y actualizaciones y haga clic en en línea
+categoría para mostrar la galería de extensiones de Visual Studio disponibles. Ingrese Bundler en el cuadro de búsqueda en el
+esquina superior derecha de la ventana, como se muestra en la Figura 6-26. Localice la extensión Bundler & Minifier y haga clic en
+el botón Descargar para agregarlo a Visual Studio. Reinicie Visual Studio para completar el proceso de instalación.
+
+
+
+Agrupación y archivos minificadores
+Una vez que se haya instalado la extensión, reinicie Visual Studio y abra el proyecto de ejemplo. Con la adición de la
+extensión, puede seleccionar varios archivos del mismo tipo en el Explorador de soluciones, agruparlos y minimizar
+sus contenidos Como ejemplo, seleccione los archivos first.css y second.css en el Explorador de soluciones, haga clic con el botón derecho y
+luego seleccione Bundler & Minifier ? Bundle and Minify Files en el menú emergente, como se muestra en la Figura 6-27.
+
+
+Guarde el archivo de salida como bundle.css, y la extensión procesará los archivos CSS. El explorador de soluciones
+mostrará un nuevo elemento bundle.css, que puede expandir para revelar el archivo minificado, llamado bundle.min.css.
+Si abre el archivo minimizado, verá que los contenidos de ambos archivos CSS separados se han combinado
+y todo el espacio en blanco ha sido eliminado. No querrás trabajar directamente con este archivo, pero es más pequeño
+y solo requiere una única conexión HTTP para entregar los estilos CSS al cliente.
+Repita el proceso con los archivos third.js y 4th.js para crear nuevos archivos llamados bundle.js
+y bundle.min.js en la carpeta wwwroot / js.
+
+
+No hay ningún cambio visual si ejecuta la aplicación, pero los archivos agrupados y minificados se utilizan para
+proporcione al navegador todos los estilos y códigos que se definieron en los archivos separados.
+A medida que realiza operaciones de agrupación y minificación, la extensión mantiene un registro de los archivos que tienen
+procesado en un archivo llamado bundleconfig.json en la carpeta raíz del proyecto. Aquí está la configuración
+que se produjo para los archivos en la aplicación de ejemplo:
+
+
+La extensión monitorea automáticamente los archivos de entrada para detectar cambios y regenera los archivos de salida cuando
+hay cambios, lo que garantiza que cualquier edición que realice se refleje en los archivos agrupados y minificados. A
+demostrar, el Listado 6-23 muestra un cambio en el archivo third.js.
+Listado 6-23. Realizar un cambio en el archivo third.js
+
+
+Resumen
+En este capítulo, describí las características que Visual Studio proporciona para el desarrollo de aplicaciones web,
+incluyendo compilación automática de clases, Browser Link, y agrupación y minificación. En el siguiente capitulo,
+Explico cómo los proyectos ASP.NET Core MVC se prestan a las pruebas unitarias.

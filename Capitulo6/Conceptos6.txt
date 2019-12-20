@@ -1,0 +1,9 @@
+Bundling --> La agrupación es un proceso de agrupar los archivos css / javascript.
+Este grupo de archivos múltiples se combina en un solo archivo.
+Este archivo único se puede almacenar en caché.
+La intención de agrupar es mejorar el rendimiento / optimización.
+
+Minification --> La minificación es un proceso de eliminación de comentarios innecesarios, espacios del archivo JavaScript / css.
+La intención principal de la minificación es disminuir el tamaño de los archivos javascript / css para que disminuya el tiempo de carga.
+La funcionalidad del archivo javacript / css permanece igual en la minificación.
+

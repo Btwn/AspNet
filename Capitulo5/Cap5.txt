@@ -1,0 +1,325 @@
+
+5...
+En una aplicación ASP.NET Core MVC, se usa un componente llamado motor de vista para producir el
+contenido enviado a los clientes. El motor de vista predeterminado se llama Razor y procesa archivos HTML anotados para
+instrucciones que insertan contenido dinámico en la salida enviada al navegador.
+En este capítulo, le doy un recorrido rápido por la sintaxis de Razor para que pueda reconocer las expresiones de Razor cuando
+tú los ves. No voy a proporcionar una referencia exhaustiva de Razor en este capítulo; piensa en esto más como
+un curso intensivo en la sintaxis. Exploro Razor en profundidad mientras continúo a través del libro, dentro del contexto de
+Otras características MVC. La Tabla 5-1 pone a Razor en contexto.
+
+
+Pregunta respuesta
+¿Qué es? Razor es el motor de visualización responsable de incorporar datos en HTML
+documentos.
+¿Por qué es útil? La capacidad de generar contenido dinámicamente es esencial para poder escribir
+Una aplicación web. Razor proporciona características que facilitan el trabajo con
+resto del ASP.NET Core MVC usando declaraciones de C #.
+¿Cómo se usa? Las expresiones de Razor se agregan a HTML estático en los archivos de vista. Las expresiones
+se evalúan para generar respuestas a las solicitudes de los clientes.
+¿Hay alguna trampa o
+limitaciones?
+Las expresiones de Razor pueden contener casi cualquier declaración de C #, y puede ser difícil
+para decidir si la lógica debe pertenecer a la vista o al controlador, que
+puede erosionar la separación de preocupaciones que es central para el patrón MVC.
+¿Hay alguna alternativa? Puede escribir su propio motor de vista, como explico en el Capítulo 21. Hay
+algunos motores de vista de terceros están disponibles, pero tienden a ser útiles para dichas
+situaciones y no atraen apoyo a largo plazo.
+
+
+Listado de soluciones de problemas
+Acceda al modelo de vista Utilice una expresión @model para definir el
+tipo de modelo y expresiones @Modelo para
+acceder al objeto modelo
+5, 14, 17
+Use nombres de tipo sin calificarlos con
+espacios de nombres
+Crear una vista importa archivos 6, 7
+Definir contenido que será utilizado por múltiples
+puntos de vista
+Use un diseño 8–10
+Especificar un diseño predeterminado Usar un archivo de inicio de vista 11–13
+Pase datos del controlador a la vista
+fuera del modelo de vista
+Use la bolsa de vista 15–16
+Generar contenido de forma selectiva Usar expresiones condicionales Razor 18, 19
+Generar contenido para cada elemento en una matriz o
+colección
+Usa una expresión navaja para cada 20–21.
+
+
+Preparando el proyecto de ejemplo...
+Para demostrar cómo funciona Razor, creé un proyecto de aplicación web ASP.NET Core (.NET Core) llamado
+Maquinilla de afeitar utilizando la plantilla vacía, como en el capítulo anterior. He habilitado el marco MVC haciendo el
+cambios mostrados en el Listado 5-1 a la clase de Inicio.
+
+
+Crear el controlador
+La configuración predeterminada que configuré en el archivo Startup.cs sigue la convención MVC de envío
+solicitudes a un controlador llamado Inicio de forma predeterminada. Creé una carpeta Controllers y le agregué un archivo de clase
+llamado HomeController.cs, que utilicé para definir el controlador simple que se muestra en el Listado 5-3.
+
+
+El controlador define un método de acción llamado Índice, en el que creo y relleno las propiedades
+de un objeto Producto. Paso el Producto al método Vista para que se use como modelo cuando la vista es
+prestados. No especifico el nombre de un archivo de vista cuando llamo al método Ver, por lo que la vista predeterminada para
+Se utilizará el método de acción.
+Crear la vista
+Para crear la vista predeterminada para el método de acción Índice, creé una carpeta Vistas / Inicio y le agregué un
+El archivo MVC View Page llamado Index.cshtml, al que agregué el contenido que se muestra en el Listado 5-4.
+
+
+Las expresiones de Razor comienzan con el carácter @. En este caso, la expresión @model declara el tipo de
+objeto modelo que pasaré a la vista desde el método de acción. Esto me permite referirme a los métodos,
+campos y propiedades del objeto de modelo de vista a través de @Model, como se muestra en el Listado 5-5, que muestra un
+adición simple a la vista de índice.
+Listado 5-5. Refiriéndose a una propiedad de objeto de modelo de vista en el archivo Index.cshtml en la carpeta Vistas / Inicio.
+
+
+Observe que declaro el tipo de objeto del modelo de vista usando @model (una m minúscula) y accedo al Nombre
+propiedad usando @Model (una M mayúscula). Esto es un poco confuso cuando comienzas a trabajar con Razor, pero
+se convierte rápidamente en una segunda naturaleza.
+
+
+Una vista que usa la expresión @model para especificar un tipo se conoce como vista fuertemente tipada. Estudio visual
+es capaz de usar la expresión @model para mostrar sugerencias de nombres de miembros cuando escribe @Modelo seguido
+por un período, como se muestra en la Figura 5-3.
+
+
+Las sugerencias de Visual Studio para los nombres de los miembros ayudan a evitar errores en las vistas de Razor. Puedes ignorar el
+sugerencias si lo prefiere, y Visual Studio resaltará los problemas con los nombres de los miembros para que pueda hacer
+correcciones, tal como sucede con los archivos de clase C # normales. Puede ver un ejemplo de resaltado de problemas en
+Figura 5-4, donde he intentado hacer referencia a @ Model.NotARealProperty. Visual Studio se ha dado cuenta de que el Producto
+La clase que especifiqué en el tipo de modelo no tiene esa propiedad y ha resaltado un error en el editor.
+
+
+Usando Ver Importaciones
+Cuando definí el objeto modelo al comienzo del archivo Index.cshtml, tuve que incluir el espacio de nombres que
+contiene la clase de modelo, así:
+...
+@model Razor.Models.Product
+...
+Por defecto, todos los tipos a los que se hace referencia en una vista Razor fuertemente tipada deben estar calificados con un
+espacio de nombres Esto no es un gran problema cuando la única referencia de tipo es para el objeto modelo, pero puede hacer una vista
+más difícil de leer al escribir expresiones Razor más complejas como las que describo más adelante en este
+capítulo.
+Puede especificar un conjunto de espacios de nombres en los que se deben buscar los tipos agregando una vista importa el archivo a
+el proyecto. El archivo de importación de vistas se coloca en la carpeta Vistas y se denomina _ViewImports.cshtml.
+¦¦ Nota Los archivos en la carpeta Vistas cuyos nombres comienzan con un guión bajo (el carácter _) no se devuelven
+para el usuario, lo que permite que el nombre del archivo diferencie entre las vistas que desea representar y los archivos que
+apoyalos. Ver archivos de importación y diseños (que describo brevemente) tienen el prefijo de subrayado.
+Para crear el archivo de importación de vistas, haga clic con el botón derecho en la carpeta Vistas en el Explorador de soluciones, seleccione Agregar ? Nuevo
+Elemento del menú emergente y seleccione la plantilla de página de importación MVC View desde ASP.NET Core ?
+Categoría web, como se muestra en la Figura 5-5.
+
+
+Los espacios de nombres en los que se deben buscar las clases utilizadas en las vistas Razor se especifican con @
+usando expresión, seguido del espacio de nombres. En el Listado 5-6, he agregado una entrada para los modelos Razor.
+espacio de nombres que contiene la clase de modelo en la aplicación de ejemplo.
+Ahora que el espacio de nombres Razor.Models está incluido en el archivo de importación de vista, puedo eliminar el
+espacio de nombres del archivo Index.cshtml, como se muestra en el Listado 5-7.
+
+
+También puede agregar una expresión @using a archivos de vista individuales, lo que permite que los tipos se usen sin
+espacios de nombres en una sola vista.
+
+
+una aplicación MVC, y la clase base que se utiliza define la propiedad Diseño. Te mostraré cómo todo esto
+funciona en el Capítulo 21, pero el efecto de establecer la propiedad Diseño en nulo es decirle a MVC que la vista es autocontenida
+y representará todo el contenido requerido para el cliente.
+Las vistas independientes están bien para aplicaciones de ejemplo simples, pero un proyecto real puede tener docenas de vistas,
+y algunas vistas habrán compartido contenido. Duplicar contenido compartido en vistas se vuelve difícil de administrar,
+especialmente cuando necesita hacer un cambio y tiene que rastrear todas las vistas que necesitan ser alteradas.
+Un mejor enfoque es usar un diseño Razor, que es una plantilla que contiene contenido común y que
+se puede aplicar a una o más vistas. Cuando realiza un cambio en un diseño, el cambio automáticamente
+afectar a todas las vistas que lo usan.
+Crear el diseño
+Los diseños generalmente son compartidos por las vistas utilizadas por múltiples controladores y se almacenan en una carpeta llamada Vistas /
+Shared, que es una de las ubicaciones en las que Razor busca cuando intenta encontrar un archivo. Para crear un diseño, cree
+la carpeta Vistas / Compartidas, haga clic con el botón derecho y seleccione Agregar Item Nuevo elemento en el menú emergente. Seleccione el MVC
+Vea la plantilla de página de diseño de la categoría ASP.NET y establezca el nombre del archivo en _BasicLayout.cshtml, como
+se muestra en la Figura 5-6. Haga clic en el botón Agregar para crear el archivo. (Al igual que ver archivos de importación, los nombres de los archivos de diseño
+comience con un guión bajo).
+
+Los diseños son una forma de vista especializada, y hay dos expresiones @ en la lista. La llamada a la @
+El método RenderBody inserta el contenido de la vista especificada por el método de acción en el marcado de diseño,
+Me gusta esto:
+
+
+He agregado un elemento de encabezado, así como algunos CSS para diseñar el contenido del elemento div que
+contiene la expresión @RenderBody, solo para dejar en claro qué contenido proviene del diseño y qué
+Viene de la vista.
+Aplicar un diseño
+Para aplicar el diseño a la vista, necesito establecer el valor de la propiedad Diseño y eliminar el HTML que
+ahora sea proporcionado por el diseño, como los elementos html, head y body, como se muestra en el Listado 5-10.
+Listado 5-10. Aplicación de un diseño en el archivo Index.cshtml en la carpeta Vistas / Inicio.
+
+
+La propiedad Diseño especifica el nombre del archivo de diseño que se usará para la vista, sin el cshtml
+extensión de archivo. Razor buscará el archivo de diseño especificado en las carpetas / Vistas / Inicio y Vistas / Compartidas.
+También configuré la propiedad ViewBag.Title en la lista. El diseño lo usará para establecer el contenido de
+el elemento del título cuando se representa la vista.
+La transformación de la vista es dramática, incluso para una aplicación tan simple. El diseño contiene todo
+la estructura requerida para cualquier respuesta HTML, lo que deja la vista para centrarse solo en el contenido dinámico
+que presenta los datos al usuario. Cuando MVC procesa el archivo Index.cshtml, aplica el diseño para crear
+una respuesta HTML unificada, como se muestra en la Figura 5-7.
+
+
+Visual Studio establecerá automáticamente el nombre del archivo en _ViewImports.cshtml y al hacer clic en Agregar
+El botón creará el archivo, que estará vacío. Agregue la expresión que se muestra en el Listado 5-6.
+
+
+Usar un archivo de inicio de vista
+Todavía tengo una pequeña arruga que resolver, que es que tengo que especificar el archivo de diseño que quiero en cada vista. Si
+Necesito cambiar el nombre del archivo de diseño, voy a tener que encontrar cada vista que se refiera a él y hacer un cambio,
+que será un proceso propenso a errores y contrario al tema general de mantenimiento fácil que se ejecuta
+a través del desarrollo MVC.
+Puedo resolver esto usando un archivo de inicio de vista. Cuando muestra una vista, MVC buscará un archivo llamado
+_ViewStart.cshtml. El contenido de este archivo se tratará como si estuviera contenido en el archivo de vista
+en sí mismo, y puedo usar esta función para establecer automáticamente un valor para la propiedad Diseño.
+Para crear un archivo de inicio de vista, haga clic con el botón derecho en la carpeta Vistas, seleccione Agregar Item Nuevo elemento en el menú emergente,
+y elija la plantilla MVC View Start Page de la categoría ASP.NET, como se muestra en la Figura 5-8.
+
+
+
+propiedad, como se muestra en el Listado 5-12.
+Listado 5-12. Aplicación de una vista predeterminada en el archivo _ViewStart.cshtml en la carpeta Vistas
+@ {
+Diseño = "_BasicLayout";
+}
+Como el archivo de inicio de la vista contiene un valor para la propiedad Diseño, puedo eliminar el correspondiente
+expresión del archivo Index.cshtml, como se muestra en el Listado 5-13.
+
+
+
+automáticamente. Los valores definidos en el archivo de vista tienen prioridad, lo que facilita anular la vista
+archivo de inicio
+También puede usar varios archivos de inicio de vista para establecer valores predeterminados para diferentes partes de la aplicación. Razor mira
+para el archivo de inicio de la vista más cercana a la vista que se está procesando, lo que significa que puede anular el valor predeterminado
+configuración agregando un archivo de inicio de vista a las carpetas Vistas / Inicio o Vistas / Compartidas, por ejemplo.
+¦¦ Precaución Es importante comprender la diferencia entre omitir la propiedad Diseño de la vista
+archivo y establecerlo en nulo. Si su vista es autónoma y no desea utilizar un diseño, configure el diseño
+propiedad a nulo. Si omite la propiedad Diseño, MVC asumirá que desea un diseño y que
+debe usar el valor que encuentra en el archivo de inicio de la vista.
+Usar expresiones de afeitar
+Ahora que le he mostrado los conceptos básicos de vistas y diseños, voy a pasar a los diferentes tipos
+de expresiones que admite Razor y cómo puede usarlas para crear contenido de vista. En un buen MVC
+En la aplicación, existe una clara separación entre los roles que desempeñan el método de acción y la vista.
+Las reglas son simples; Los resumí en la Tabla 5-3.
+
+
+Usar expresiones de afeitar
+Ahora que le he mostrado los conceptos básicos de vistas y diseños, voy a pasar a los diferentes tipos
+de expresiones que admite Razor y cómo puede usarlas para crear contenido de vista. En un buen MVC
+En la aplicación, existe una clara separación entre los roles que desempeñan el método de acción y la vista.
+Las reglas son simples; Los resumí en la Tabla 5-3.
+Vuelvo a este tema a lo largo de este libro. Para obtener lo mejor de MVC, debes respetar
+e imponer la separación entre las diferentes partes de la aplicación. Como verás, puedes hacer mucho
+con Razor, incluido el uso de declaraciones de C #, pero no debe usar Razor para realizar la lógica comercial o
+manipule sus objetos de modelo de dominio de cualquier manera. El listado 5-14 muestra la adición de una nueva expresión a
+la vista de índice.
+
+
+Podría haber formateado el valor de la propiedad Price en el método de acción y pasarlo a la vista.
+Hubiera funcionado, pero tomar este enfoque socava el beneficio del patrón MVC y reduce
+Mi capacidad de responder a los cambios en el futuro. Como dije, volveré sobre este tema nuevamente, pero deberías
+recuerde que ASP.NET Core MVC no exige el uso adecuado del patrón MVC y que debe
+manténgase al tanto del efecto de las decisiones de diseño y codificación que tome.
+PROCESAMIENTO VERSUS FORMATO DE DATOS
+Es importante diferenciar entre procesar datos y formatearlos. Visualiza datos de formato, que es
+por qué pasé el objeto Producto en la sección anterior a la vista, en lugar de formatear el objeto
+propiedades en una cadena de visualización. El procesamiento de datos, incluida la selección de los objetos de datos para mostrar, es el
+responsabilidad del controlador, que solicitará al modelo que obtenga y modifique los datos que requiere. Puede
+a veces es difícil determinar dónde está la línea entre el procesamiento y el formateo, pero como regla de
+pulgar, recomiendo errar por el lado de la precaución y presionar cualquier cosa menos la más simple de las expresiones
+fuera de la vista y dentro del controlador.
+Insertar valores de datos
+Lo más simple que puede hacer con una expresión Razor es insertar un valor de datos en el marcado. Lo mas
+Una forma común de hacerlo es con la expresión @Model. La vista de índice ya incluye ejemplos de esto
+enfoque, así:
+
+
+La propiedad ViewBag devuelve un objeto dinámico que puede usarse para definir propiedades arbitrarias. En
+En el listado, he definido una propiedad llamada StockLevel y le he asignado un valor de 2. Desde el ViewBag
+la propiedad es dinámica, no tengo que declarar los nombres de las propiedades por adelantado, pero sí significa que Visual
+Studio no puede proporcionar sugerencias de autocompletar para ver las propiedades de la bolsa.
+Saber cuándo usar la bolsa de visualización y cuándo se debe extender el modelo es una cuestión de experiencia
+y preferencia personal. Mi estilo personal es usar la bolsa de vista solo para dar una visión de cómo
+procesar datos y no usarlos para valores de datos que se muestran al usuario. Pero eso es justo lo que funciona para mí.
+Si utiliza la bolsa de visualización para los datos que desea mostrar al usuario, entonces accede a los valores utilizando @ViewBag
+expresión, como se muestra en el Listado 5-16.
+Listado 5-16. Visualización de un valor de bolsa de vista en el archivo Index.cshtml en la carpeta Vistas / Inicio
+Producto @model
+@ {
+ViewBag.Title = "Nombre del producto";
+}
+<p>
+
+
+Establecer valores de atributo
+Todos los ejemplos hasta ahora han establecido el contenido de los elementos, pero también puede usar expresiones Razor para establecer el
+valor de los atributos del elemento. El Listado 5-17 muestra al usuario de las expresiones @Model y @ViewBag para establecer el
+contenido de atributos en elementos en la vista de índice.
+Listado 5-17. Establecer valores de atributo en el archivo Index.cshtml en la carpeta Vistas / Inicio.
+
+
+Los atributos de datos, que son atributos cuyos nombres tienen el prefijo data-, han sido informales
+de crear atributos personalizados durante muchos años y formar parte del estándar formal como parte de HTML5.
+Se aplican con mayor frecuencia para que el código JavaScript pueda localizar elementos específicos o para que los estilos CSS puedan ser
+más estrictamente aplicado
+Si ejecuta la aplicación de ejemplo y mira la fuente HTML que se envía al navegador, verá
+que Razor ha establecido los valores de los atributos, así:
+
+
+Usar declaraciones condicionales
+Razor puede procesar declaraciones condicionales, lo que significa que puedo adaptar el resultado desde una vista basada
+en valores en la vista de datos. Este tipo de técnica está en el corazón de Razor y le permite crear complejos
+y diseños fluidos que todavía son razonablemente fáciles de leer y mantener. En el Listado 5-18, he actualizado el
+Vista de índice para que incluya una declaración condicional.
+Listado 5-18. Uso de una declaración de afeitar condicional en el archivo Index.cshtml en la carpeta Vistas / Inicio.
+
+
+
+Para comenzar una declaración condicional, coloque un carácter @ delante de la palabra clave condicional de C #, que
+es cambiar en este ejemplo. Termina el bloque de código con un carácter de llave cerrada (}) tal como lo haría
+con un bloque de código C # normal.
+Dentro del bloque de código Razor, puede incluir elementos HTML y valores de datos en la salida de la vista solo
+definiendo las expresiones HTML y Razor, así:
+...
+<b> Stock bajo (@ ViewBag.StockLevel) </b>
+...
+No tengo que poner los elementos o expresiones entre comillas o denotarlos de ninguna manera especial: la Navaja
+El motor los interpretará como salida a procesar. Sin embargo, si desea insertar texto literal en la vista
+cuando no está contenido en un elemento HTML, entonces debes darle una mano a Razor y ponerle un prefijo a la línea
+Me gusta esto:
+...
+@: Agotado
+...
+Los caracteres @: evitan que Razor interprete esto como una declaración de C #, que es el comportamiento predeterminado
+cuando encuentra texto. Puede ver el resultado de la declaración condicional en la Figura 5-10.
+
+
+Esta declaración condicional produce los mismos resultados que la declaración de cambio, pero quería
+demuestre cómo puede combinar declaraciones condicionales de C # con vistas de Razor. Explico como funciona
+en el Capítulo 21, cuando describo puntos de vista en profundidad.
+Enumeración de matrices y colecciones
+Al escribir una aplicación MVC, a menudo querrá enumerar el contenido de una matriz u otro
+tipo de colección de objetos y generar contenido que detalla cada uno. Para demostrar cómo se hace esto, en
+Listado 5-20 He revisado la acción de índice en el controlador de inicio para pasar una matriz de objetos de producto al
+ver.
+Listado 5-20. Uso de una matriz en el archivo HomeController.cs en la carpeta Controllers.
+
+
+
+La instrucción @foreach enumera el contenido de la matriz del modelo y genera una fila en una tabla para
+cada uno de ellos. Puedes ver cómo creé una variable local llamada p en el bucle foreach y luego me referí a su
+propiedades utilizando las expresiones Razor @ p.Name y @ p.Price. Puede ver el resultado en la Figura 5-11.
+
+
+Resumen
+En este capítulo, le di una visión general del motor de vista Razor y cómo se puede usar para generar HTML.
+Le mostré cómo referirse a los datos pasados ??desde el controlador a través del objeto de modelo de vista y la bolsa de vista
+y cómo las expresiones Razor se pueden usar para adaptar las respuestas al usuario en función de los valores de los datos. Ya verás
+muchos ejemplos diferentes de cómo Razor se puede usar en el resto del libro, y describo cómo se ve el MVC
+el mecanismo funciona en detalle en el Capítulo 21. En el próximo capítulo, presento algunas de las características proporcionadas por
+Visual Studio para trabajar con proyectos ASP.NET Core MVC.
