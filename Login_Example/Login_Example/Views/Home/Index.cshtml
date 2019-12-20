@@ -1,0 +1,11 @@
+﻿@using Login_Example.Models;
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Index</h2>
+@{ 
+    var user = Session["user"] as User;
+}
+<h3>wELCOME @user.Name </h3>
+
+
