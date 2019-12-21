@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.AspNetCore.Routing;
 using UrlsAndRoutes.Infrastructure;
 
 namespace UrlsAndRoutes
@@ -18,6 +19,8 @@ namespace UrlsAndRoutes
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<RouteOptions>(options =>
+                options.ConstraintMap.Add("weekday", typeof(WeekDayConstraint)));
             services.AddMvc().AddMvcOptions(options => options.EnableEndpointRouting = false);
         }
 
@@ -30,12 +33,13 @@ namespace UrlsAndRoutes
                 app.UseStatusCodePages();
             }
             app.UseStaticFiles();
-            app.UseMvc(routes => {
-                routes.MapRoute(
-                    name: "MyRoute",
-                    template: "{controller}/{action}/{id?}",
-                    defaults: new { controller = "Home", action = "Index" },
-                    constraints: new { id = new WeekDayConstraint() });
+            app.UseMvcWithDefaultRoute();
+            //app.UseMvc(routes => {
+            //    routes.MapRoute(
+            //        name: "MyRoute",
+            //        template: "{controller}/{action}/{id?}",
+            //        defaults: new { controller = "Home", action = "Index" },
+            //        constraints: new { id = new WeekDayConstraint() });
 
                 //routes.MapRoute(
                 //    name: "MyRoute",
@@ -73,7 +77,7 @@ namespace UrlsAndRoutes
             //    name: "",
             //    template: "Public/{controller=Home}/{action=Index}"
             //);
-        });
+        //});
 
             //app.UseRouting();
 
