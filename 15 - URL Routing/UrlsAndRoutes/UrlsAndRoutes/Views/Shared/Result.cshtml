@@ -16,5 +16,28 @@
             <tr><th>@key :</th><td>@Model.Data[key]</td></tr>
         }
     </table>
+    <a asp-controller="Home" asp-action="CustomVariable">This is an outgoing URL</a>
+    <br />
+    <a asp-route="out">This is an outgoing URL</a>
+    <br />
+    <p>URL: @Url.Action("CustomVariable", "Home", new { id = 100 })</p>
+
+    @*<a asp-controller="Home"
+           asp-action="Index"
+           asp-route-id="Hello"
+           asp-protocol="https"
+           asp-host="myserver.mydomain.com"
+           asp-fragment="myFragment"
+           >
+            This is a outgoing URL
+        </a>*@
+
+    @*<a asp-action="CustomVariable">This is an outgoing URL</a>
+        <br />
+        <a asp-controller="Admin" asp-action="Index">This target another controller</a>
+        <br />
+        <a asp-controller="Customer" asp-action="Index">This is an outgoing URL</a>
+        <br />
+        <a asp-controller="Home" asp-action="Index" asp-route-id="Hello">This is an outgoing URL</a>*@
 </body>
 </html>

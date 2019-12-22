@@ -20,7 +20,12 @@ namespace UrlsAndRoutes
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<RouteOptions>(options =>
-                options.ConstraintMap.Add("weekday", typeof(WeekDayConstraint)));
+            {
+                options.ConstraintMap.Add("weekday", typeof(WeekDayConstraint));
+                options.LowercaseUrls = true;
+                options.AppendTrailingSlash = true;
+            });
+
             services.AddMvc().AddMvcOptions(options => options.EnableEndpointRouting = false);
         }
 
@@ -33,7 +38,29 @@ namespace UrlsAndRoutes
                 app.UseStatusCodePages();
             }
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
+
+            //app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes => {
+                //routes.MapRoute("otro","{controller}/{action}",new { myVar = "true" });
+
+                //routes.MapRoute(
+                //    name: "NewRoute",
+                //    template: "App/Do{action}",
+                //    defaults: new { controller = "Home" });
+
+                routes.Routes.Add(new LegacyRoute(
+                    "/articles/Windows_3.1_Overview.html",
+                    "/old/.NET_1.0_Class_Library"));
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "out",
+                    template: "outbound/{controller=Home}/{action=Index}");
+            });
+
             //app.UseMvc(routes => {
             //    routes.MapRoute(
             //        name: "MyRoute",
