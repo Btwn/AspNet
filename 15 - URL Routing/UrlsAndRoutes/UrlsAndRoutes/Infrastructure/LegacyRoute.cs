@@ -7,19 +7,19 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Mvc.Internal;
 
 namespace UrlsAndRoutes.Infrastructure
 {
     public class LegacyRoute : IRouter
     {
         private string[] urls;
-        private IRouter mvcRoute;
+        //private IRouter mvcRoute;
 
-        public LegacyRoute(IServiceProvider services, params string[] targetUrls)
+        //public LegacyRoute(IServiceProvider services, params string[] targetUrls)
+        public LegacyRoute(params string[] targetUrls)
         {
             this.urls = targetUrls;
-            mvcRoute = services.GetRequiredService<MvcRouteHandler>();
+            //mvcRoute = services.GetRequiredService<MvcRouteHandler>();
         }
 
         public Task RouteAsync(RouteContext context)

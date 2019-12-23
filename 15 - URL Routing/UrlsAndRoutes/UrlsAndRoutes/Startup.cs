@@ -41,12 +41,9 @@ namespace UrlsAndRoutes
 
             //app.UseMvcWithDefaultRoute();
             app.UseMvc(routes => {
-                //routes.MapRoute("otro","{controller}/{action}",new { myVar = "true" });
-
-                //routes.MapRoute(
-                //    name: "NewRoute",
-                //    template: "App/Do{action}",
-                //    defaults: new { controller = "Home" });
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}");
 
                 routes.Routes.Add(new LegacyRoute(
                     "/articles/Windows_3.1_Overview.html",
@@ -59,6 +56,13 @@ namespace UrlsAndRoutes
                 routes.MapRoute(
                     name: "out",
                     template: "outbound/{controller=Home}/{action=Index}");
+
+                //routes.MapRoute("otro","{controller}/{action}",new { myVar = "true" });
+
+                //routes.MapRoute(
+                //    name: "NewRoute",
+                //    template: "App/Do{action}",
+                //    defaults: new { controller = "Home" });
             });
 
             //app.UseMvc(routes => {
