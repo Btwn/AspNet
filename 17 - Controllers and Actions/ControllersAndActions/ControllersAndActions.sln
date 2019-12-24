@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllersAndActions", "ControllersAndActions\ControllersAndActions.csproj", "{77F57A66-BFEA-449C-A50C-CF0C5755588D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControllersAndActions", "ControllersAndActions\ControllersAndActions.csproj", "{77F57A66-BFEA-449C-A50C-CF0C5755588D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllersAndActions.Test", "ControllersAndActions.Test\ControllersAndActions.Test.csproj", "{89EBDDD7-8977-44AB-833A-112307E8E51A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{77F57A66-BFEA-449C-A50C-CF0C5755588D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77F57A66-BFEA-449C-A50C-CF0C5755588D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77F57A66-BFEA-449C-A50C-CF0C5755588D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89EBDDD7-8977-44AB-833A-112307E8E51A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89EBDDD7-8977-44AB-833A-112307E8E51A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89EBDDD7-8977-44AB-833A-112307E8E51A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89EBDDD7-8977-44AB-833A-112307E8E51A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
