@@ -1,0 +1,46 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Linq;
+
+namespace ControllersAndActions.Controllers
+{
+    public class PocoController : Controller
+    {
+        public ViewResult Index() => View("Result", $"This is a POCO controller");
+
+        public ViewResult Headers() => View("DictionaryResult",
+            Request.Headers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.First()));
+
+
+
+        //[ControllerContext]
+        //public ControllerContext ControllerContext { get; set; }
+
+        //public ViewResult Headers() =>
+        //    new ViewResult()
+        //    {
+        //        ViewName = "DictionaryResult",
+        //        ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+        //        {
+        //            Model = ControllerContext.HttpContext.Request.Headers
+        //                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value.First())
+        //        }
+        //    };
+
+
+        //sin heredar de la clase controller
+        //public ViewResult Index() => new ViewResult()
+        //{
+        //    ViewName = "Result",
+        //    ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+        //    {
+        //        Model = $"This is a POCO controller"
+        //    }
+        //};
+
+        //la forma mas simple
+        //public string Index() => "This is a POCO controller";
+
+    }
+}
