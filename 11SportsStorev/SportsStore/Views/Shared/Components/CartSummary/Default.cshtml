@@ -1,0 +1,30 @@
+﻿@model Cart
+
+    <div class="">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        @if (Model.Lines.Count() > 0)
+                        {
+
+                            <p class="navbar-text">
+                                <b>Your cart:</b>
+                                @Model.Lines.Sum(x => x.Quantity) item(s)
+                                @Model.ComputeTotalValue().ToString("c")
+                            </p>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="btn btn-secondary navbar-btn"
+                           asp-controller="Cart" asp-action="Index"
+                           asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()">
+                            <i class="fas fa-shopping-cart"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
