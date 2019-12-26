@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\jd.rivera\\gitDotNEt\\AspNet\\capitulo9\\SportsStore\\SportsStore\\SportsStore.csproj": {}
+    "C:\\dadado\\Cursos\\AspNet\\09SportsStore\\SportsStore\\SportsStore.csproj": {}
   },
   "projects": {
-    "C:\\jd.rivera\\gitDotNEt\\AspNet\\capitulo9\\SportsStore\\SportsStore\\SportsStore.csproj": {
+    "C:\\dadado\\Cursos\\AspNet\\09SportsStore\\SportsStore\\SportsStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\jd.rivera\\gitDotNEt\\AspNet\\capitulo9\\SportsStore\\SportsStore\\SportsStore.csproj",
+        "projectUniqueName": "C:\\dadado\\Cursos\\AspNet\\09SportsStore\\SportsStore\\SportsStore.csproj",
         "projectName": "SportsStore",
-        "projectPath": "C:\\jd.rivera\\gitDotNEt\\AspNet\\capitulo9\\SportsStore\\SportsStore\\SportsStore.csproj",
-        "packagesPath": "C:\\Users\\jdrivera\\.nuget\\packages\\",
-        "outputPath": "C:\\jd.rivera\\gitDotNEt\\AspNet\\capitulo9\\SportsStore\\SportsStore\\obj\\",
+        "projectPath": "C:\\dadado\\Cursos\\AspNet\\09SportsStore\\SportsStore\\SportsStore.csproj",
+        "packagesPath": "C:\\Users\\dadado\\.nuget\\packages\\",
+        "outputPath": "C:\\dadado\\Cursos\\AspNet\\09SportsStore\\SportsStore\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\jdrivera\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dadado\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,6 +54,10 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[3.1.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
             }
           },
           "imports": [
